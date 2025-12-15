@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Translation System</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="~/css/animations.css" asp-append-version="true">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-translate"></i> Translation System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            <i class="bi bi-house-door me-1"></i>Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/test-all.html">
+                            <i class="bi bi-check2-all me-1"></i>Тест всех переводов
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/test-ru-tt.html">
+                            <i class="bi bi-arrow-left-right me-1"></i>Русский ↔ Татарский
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/swagger" target="_blank">
+                            <i class="bi bi-code-slash me-1"></i>API Docs
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое -->
+    <main class="container py-4">
+        @RenderBody()
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer mt-5 py-4 bg-white border-top">
+        <div class="container text-center">
+            <span class="text-muted">
+                <i class="bi bi-c-circle me-1"></i>Система локализации © 2025
+            </span>
+            <div class="mt-2">
+                <small class="text-muted">Поддержка: ru, en, tt языки | PostgreSQL | ASP.NET Core</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
+
+    <!-- Custom scripts -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Инициализация анимаций -->
+    <script>
+        // Анимация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            // Анимация для карточек
+            document.querySelectorAll('.card').forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('animate__animated', 'animate__fadeInUp');
+            });
+
+            // Анимация для строк таблицы
+            document.querySelectorAll('.translation-item').forEach((row, index) => {
+                row.style.animationDelay = `${index * 0.05}s`;
+                row.classList.add('animate__animated', 'animate__fadeIn');
+            });
+        });
+    </script>
+    <!-- Debug script (только для разработки) -->
+    @if (Context.Request.Host.Host.Contains("localhost"))
+    {
+        <script src="~/js/test-translator.js"></script>
+    }
+</body>
+</html>

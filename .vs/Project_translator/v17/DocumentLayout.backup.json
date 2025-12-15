@@ -1,0 +1,569 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Documents\\C#\\Project_translator\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\controllers\\culturalprofilescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:controllers\\culturalprofilescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\controllers\\glossarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:controllers\\glossarycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\services\\translationmemoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:services\\translationmemoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\models\\culturalprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:models\\culturalprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\models\\translationmemory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:models\\translationmemory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\models\\glossaryterm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:models\\glossaryterm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\wwwroot\\js\\test-translator.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:wwwroot\\js\\test-translator.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\wwwroot\\test-all.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:wwwroot\\test-all.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\wwwroot\\js\\api-tester.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:wwwroot\\js\\api-tester.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\wwwroot\\test-ru-tt.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:wwwroot\\test-ru-tt.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\wwwroot\\js\\test-api.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:wwwroot\\js\\test-api.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\controllers\\quicktranslatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:controllers\\quicktranslatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\controllers\\sourcestringscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:controllers\\sourcestringscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\services\\mymemorytranslationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:services\\mymemorytranslationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\services\\itranslationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:services\\itranslationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\pages\\error.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:pages\\error.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\controllers\\translationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:controllers\\translationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\controllers\\localescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:controllers\\localescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\project_translator.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:project_translator.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\models\\translation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:models\\translation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\models\\sourcestring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:models\\sourcestring.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\models\\locale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:models\\locale.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\models\\project.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:models\\project.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\wwwroot\\css\\animations.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:wwwroot\\css\\animations.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:pages\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|d:\\documents\\c#\\project_translator\\pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4B1CAFD4-DC8F-4910-AC28-55BFEEC699DE}|Project_translator.csproj|solutionrelative:pages\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CulturalProfilesController.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Controllers\\CulturalProfilesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CulturalProfilesController.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Controllers\\CulturalProfilesController.cs",
+              "RelativeToolTip": "Controllers\\CulturalProfilesController.cs",
+              "ViewState": "AgIAAKoAAAAAAAAAAAAswLkAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T17:24:26.938Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GlossaryController.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Controllers\\GlossaryController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GlossaryController.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Controllers\\GlossaryController.cs",
+              "RelativeToolTip": "Controllers\\GlossaryController.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAqwFcAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T17:23:00.427Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TranslationMemoryService.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Services\\TranslationMemoryService.cs",
+              "RelativeDocumentMoniker": "Services\\TranslationMemoryService.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Services\\TranslationMemoryService.cs",
+              "RelativeToolTip": "Services\\TranslationMemoryService.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAuwJgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T17:11:50.596Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CulturalProfile.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Models\\CulturalProfile.cs",
+              "RelativeDocumentMoniker": "Models\\CulturalProfile.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Models\\CulturalProfile.cs",
+              "RelativeToolTip": "Models\\CulturalProfile.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAswBYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T17:11:10.763Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TranslationMemory.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Models\\TranslationMemory.cs",
+              "RelativeDocumentMoniker": "Models\\TranslationMemory.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Models\\TranslationMemory.cs",
+              "RelativeToolTip": "Models\\TranslationMemory.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAswEYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T17:10:46.479Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GlossaryTerm.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Models\\GlossaryTerm.cs",
+              "RelativeDocumentMoniker": "Models\\GlossaryTerm.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Models\\GlossaryTerm.cs",
+              "RelativeToolTip": "Models\\GlossaryTerm.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAswBIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T17:10:14.265Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "test-translator.js",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\wwwroot\\js\\test-translator.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\test-translator.js",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\wwwroot\\js\\test-translator.js",
+              "RelativeToolTip": "wwwroot\\js\\test-translator.js",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAiwNYAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-08T15:17:25.127Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "test-all.html",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\wwwroot\\test-all.html",
+              "RelativeDocumentMoniker": "wwwroot\\test-all.html",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\wwwroot\\test-all.html",
+              "RelativeToolTip": "wwwroot\\test-all.html",
+              "ViewState": "AgIAAJUAAAAAAAAAAAAAwJ4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-12-08T13:30:10.626Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "api-tester.js",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\wwwroot\\js\\api-tester.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\api-tester.js",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\wwwroot\\js\\api-tester.js",
+              "RelativeToolTip": "wwwroot\\js\\api-tester.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-07T20:36:25.267Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "test-ru-tt.html",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\wwwroot\\test-ru-tt.html",
+              "RelativeDocumentMoniker": "wwwroot\\test-ru-tt.html",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\wwwroot\\test-ru-tt.html",
+              "RelativeToolTip": "wwwroot\\test-ru-tt.html",
+              "ViewState": "AgIAADQAAAAAAAAAAAAAwDwAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-12-07T23:37:15.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "animations.css",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\wwwroot\\css\\animations.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\animations.css",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\wwwroot\\css\\animations.css",
+              "RelativeToolTip": "wwwroot\\css\\animations.css",
+              "ViewState": "AgIAAH8AAAAAAAAAAAAAwIkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-07T22:10:56.906Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "test-api.js",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\wwwroot\\js\\test-api.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\test-api.js",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\wwwroot\\js\\test-api.js",
+              "RelativeToolTip": "wwwroot\\js\\test-api.js",
+              "ViewState": "AgIAACUAAAAAAAAAAAAAADAAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-12-07T22:27:19.006Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "QuickTranslateController.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Controllers\\QuickTranslateController.cs",
+              "RelativeDocumentMoniker": "Controllers\\QuickTranslateController.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Controllers\\QuickTranslateController.cs",
+              "RelativeToolTip": "Controllers\\QuickTranslateController.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAiwFsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T18:52:04.62Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MyMemoryTranslationService.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Services\\MyMemoryTranslationService.cs",
+              "RelativeDocumentMoniker": "Services\\MyMemoryTranslationService.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Services\\MyMemoryTranslationService.cs",
+              "RelativeToolTip": "Services\\MyMemoryTranslationService.cs",
+              "ViewState": "AgIAACEFAAAAAAAAAAAuwCkFAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T18:31:44.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "site.css",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAALADAAAAAAAAAAAAwMEDAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-12-05T16:02:01.149Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Pages\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Pages\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAiwGAAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-05T15:54:48.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-03T18:53:20.075Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Error.cshtml",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Pages\\Error.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Error.cshtml",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Pages\\Error.cshtml",
+              "RelativeToolTip": "Pages\\Error.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-05T17:48:47.373Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Error.cshtml.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Pages\\Error.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Error.cshtml.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Pages\\Error.cshtml.cs",
+              "RelativeToolTip": "Pages\\Error.cshtml.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAcwB4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T17:50:10.244Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Index.cshtml.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Pages\\Index.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Index.cshtml.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Pages\\Index.cshtml.cs",
+              "RelativeToolTip": "Pages\\Index.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-05T15:38:36.179Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Pages\\Index.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Index.cshtml",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Pages\\Index.cshtml",
+              "RelativeToolTip": "Pages\\Index.cshtml",
+              "ViewState": "AgIAAOoAAAAAAAAAAAAiwNEDAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-05T15:36:38.37Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-05T10:36:17.674Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ITranslationService.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Services\\ITranslationService.cs",
+              "RelativeDocumentMoniker": "Services\\ITranslationService.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Services\\ITranslationService.cs",
+              "RelativeToolTip": "Services\\ITranslationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T22:22:43.56Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "TranslationsController.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Controllers\\TranslationsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TranslationsController.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Controllers\\TranslationsController.cs",
+              "RelativeToolTip": "Controllers\\TranslationsController.cs",
+              "ViewState": "AgIAAJcBAAAAAAAAAAA1wJwBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T20:10:34.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SourceStringsController.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Controllers\\SourceStringsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\SourceStringsController.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Controllers\\SourceStringsController.cs",
+              "RelativeToolTip": "Controllers\\SourceStringsController.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAUwGQAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T20:09:16.902Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "LocalesController.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Controllers\\LocalesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LocalesController.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Controllers\\LocalesController.cs",
+              "RelativeToolTip": "Controllers\\LocalesController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAqwFoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T20:08:26.099Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ProjectsController.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Controllers\\ProjectsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProjectsController.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Controllers\\ProjectsController.cs",
+              "RelativeToolTip": "Controllers\\ProjectsController.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAqwCgAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T20:05:38.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Project_translator.csproj",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Project_translator.csproj",
+              "RelativeDocumentMoniker": "Project_translator.csproj",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Project_translator.csproj",
+              "RelativeToolTip": "Project_translator.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-03T19:29:54.651Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T19:14:59.512Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAAHoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T19:07:22.155Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Translation.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Models\\Translation.cs",
+              "RelativeDocumentMoniker": "Models\\Translation.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Models\\Translation.cs",
+              "RelativeToolTip": "Models\\Translation.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAUwBwAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T18:59:11.948Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "SourceString.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Models\\SourceString.cs",
+              "RelativeDocumentMoniker": "Models\\SourceString.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Models\\SourceString.cs",
+              "RelativeToolTip": "Models\\SourceString.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAA0wBsAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T18:58:48.307Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Locale.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Models\\Locale.cs",
+              "RelativeDocumentMoniker": "Models\\Locale.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Models\\Locale.cs",
+              "RelativeToolTip": "Models\\Locale.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAUwBIAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T18:58:29.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Project.cs",
+              "DocumentMoniker": "D:\\Documents\\C#\\Project_translator\\Models\\Project.cs",
+              "RelativeDocumentMoniker": "Models\\Project.cs",
+              "ToolTip": "D:\\Documents\\C#\\Project_translator\\Models\\Project.cs",
+              "RelativeToolTip": "Models\\Project.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAIwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T18:57:52.955Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+﻿/* wwwroot/css/animations.css */
+/* Анимации для переводчика */
+
+/* Анимация пульсации */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(67, 97, 238, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(67, 97, 238, 0);
+    }
+}
+
+/* Анимация появления */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Анимация тряски */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+/* Волна загрузки */
+.loading-wave {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+    .loading-wave div {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        margin: 0 3px;
+        animation: wave 1.2s ease-in-out infinite;
+    }
+
+        .loading-wave div:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .loading-wave div:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+@keyframes wave {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateY(-10px);
+        opacity: 0.5;
+    }
+}
+
+/* Анимации для элементов */
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+.result-animation {
+    animation: slideInUp 0.5s ease-out;
+}
+
+.shake-animation {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Градиентный текст */
+.gradient-text {
+    background: linear-gradient(45deg, #4361ee, #3a0ca3, #7209b7, #f72585);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 300% 300%;
+    animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Анимация типинга */
+.typing-animation {
+    display: inline-block;
+    overflow: hidden;
+    border-right: .15em solid #4361ee;
+    white-space: nowrap;
+    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: #4361ee;
+    }
+}
+
+/* Минимальная высота */
+.min-height-100 {
+    min-height: 100px;
+}

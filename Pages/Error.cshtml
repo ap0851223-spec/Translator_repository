@@ -1,0 +1,20 @@
+﻿@page
+@model Project_translator.Pages.ErrorModel
+@{
+	ViewData["Title"] = "Ошибка";
+}
+<div class="container mt-5">
+    <h1 class="text-danger">Ошибка @Model.ErrorCode</h1>
+    <h2 class="text-danger">@Model.ErrorMessage</h2>
+
+    @if (Model.ShowRequestId)
+    {
+        <p><strong>Request ID:</strong> <code>@Model.RequestId</code></p>
+    }
+
+    <p>Извините, произошла ошибка при обработке вашего запроса.</p>
+
+    <div class="mt-4">
+        <a href="/" class="btn btn-primary">Вернуться на главную</a>
+    </div>
+</div>

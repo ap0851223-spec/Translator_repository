@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Тест всех переводов</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .test-case {
+            margin-bottom: 10px;
+        }
+
+        .result {
+            min-height: 60px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Тест всех направлений перевода</h1>
+
+        <!-- Тест 1: Английский → Русский -->
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+                Английский → Русский
+            </div>
+            <div class="card-body">
+                <div class="test-case">
+                    <input type="text" class="form-control mb-2" value="Hello" id="en-ru-text">
+                    <button class="btn btn-primary" onclick="testTranslation('en-ru')">Перевести</button>
+                    <div class="result mt-2" id="en-ru-result">Результат...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Тест 2: Английский → Татарский -->
+        <div class="card mb-3">
+            <div class="card-header bg-success text-white">
+                Английский → Татарский
+            </div>
+            <div class="card-body">
+                <div class="test-case">
+                    <input type="text" class="form-control mb-2" value="Hello" id="en-tt-text">
+                    <button class="btn btn-success" onclick="testTranslation('en-tt')">Перевести</button>
+                    <div class="result mt-2" id="en-tt-result">Результат...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Тест 3: Русский → Английский -->
+        <div class="card mb-3">
+            <div class="card-header bg-warning text-white">
+                Русский → Английский
+            </div>
+            <div class="card-body">
+                <div class="test-case">
+                    <input type="text" class="form-control mb-2" value="Привет" id="ru-en-text">
+                    <button class="btn btn-warning" onclick="testTranslation('ru-en')">Перевести</button>
+                    <div class="result mt-2" id="ru-en-result">Результат...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Тест 4: Русский → Татарский -->
+        <div class="card mb-3">
+            <div class="card-header bg-danger text-white">
+                Русский → Татарский
+            </div>
+            <div class="card-body">
+                <div class="test-case">
+                    <input type="text" class="form-control mb-2" value="Привет" id="ru-tt-text">
+                    <button class="btn btn-danger" onclick="testTranslation('ru-tt')">Перевести</button>
+                    <div class="result mt-2" id="ru-tt-result">Результат...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Тест 5: Татарский → Английский -->
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white">
+                Татарский → Английский
+            </div>
+            <div class="card-body">
+                <div class="test-case">
+                    <input type="text" class="form-control mb-2" value="Сәлам" id="tt-en-text">
+                    <button class="btn btn-info" onclick="testTranslation('tt-en')">Перевести</button>
+                    <div class="result mt-2" id="tt-en-result">Результат...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Тест 6: Татарский → Русский -->
+        <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+                Татарский → Русский
+            </div>
+            <div class="card-body">
+                <div class="test-case">
+                    <input type="text" class="form-control mb-2" value="Сәлам" id="tt-ru-text">
+                    <button class="btn btn-dark" onclick="testTranslation('tt-ru')">Перевести</button>
+                    <div class="result mt-2" id="tt-ru-result">Результат...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка теста всех сразу -->
+        <div class="mt-4">
+            <button class="btn btn-lg btn-primary" onclick="testAll()">Тестировать все направления</button>
+            <a href="/" class="btn btn-lg btn-secondary">На главную</a>
+        </div>
+    </div>
+
+    <script>
+        // Карта направлений перевода
+        const translationMap = {
+            'en-ru': { source: 'en', target: 'ru', textId: 'en-ru-text', resultId: 'en-ru-result' },
+            'en-tt': { source: 'en', target: 'tt', textId: 'en-tt-text', resultId: 'en-tt-result' },
+            'ru-en': { source: 'ru', target: 'en', textId: 'ru-en-text', resultId: 'ru-en-result' },
+            'ru-tt': { source: 'ru', target: 'tt', textId: 'ru-tt-text', resultId: 'ru-tt-result' },
+            'tt-en': { source: 'tt', target: 'en', textId: 'tt-en-text', resultId: 'tt-en-result' },
+            'tt-ru': { source: 'tt', target: 'ru', textId: 'tt-ru-text', resultId: 'tt-ru-result' }
+        };
+
+        async function testTranslation(direction) {
+            const config = translationMap[direction];
+            const text = document.getElementById(config.textId).value;
+            const resultDiv = document.getElementById(config.resultId);
+
+            resultDiv.innerHTML = '<div class="text-muted">Переводим...</div>';
+
+            try {
+                const response = await fetch('/api/QuickTranslate/translate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        Text: text,
+                        SourceLang: config.source,
+                        TargetLang: config.target
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <strong>${data.original}</strong><br>
+                            → <strong>${data.translated}</strong><br>
+                            <small>${data.source} → ${data.target}</small>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="alert alert-danger">Ошибка: ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="alert alert-danger">Ошибка: ${error.message}</div>`;
+            }
+        }
+
+        async function testAll() {
+            console.log('Тестирую все направления...');
+            for (const direction in translationMap) {
+                await testTranslation(direction);
+                await new Promise(resolve => setTimeout(resolve, 500)); // Задержка между запросами
+            }
+            console.log('Все тесты завершены');
+        }
+
+        // Автоматически тестируем все направления при загрузке
+        window.onload = function() {
+            setTimeout(testAll, 1000);
+        };
+    </script>
+</body>
+</html>
