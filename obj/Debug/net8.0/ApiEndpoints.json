@@ -702,6 +702,74 @@
     ]
   },
   {
+    "ContainingType": "Project_translator.Controllers.TranslationMemoryController",
+    "Method": "DeleteMemory",
+    "RelativePath": "api/TranslationMemory/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_translator.Controllers.TranslationMemoryController",
+    "Method": "ClearMemory",
+    "RelativePath": "api/TranslationMemory/clear",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Project_translator.Controllers.ClearMemoryRequest",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_translator.Controllers.TranslationMemoryController",
+    "Method": "GetHistory",
+    "RelativePath": "api/TranslationMemory/history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "source",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "target",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "limit",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_translator.Controllers.TranslationMemoryController",
+    "Method": "GetStats",
+    "RelativePath": "api/TranslationMemory/stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Project_translator.Controllers.TranslationsController",
     "Method": "GetTranslations",
     "RelativePath": "api/Translations",
@@ -1022,5 +1090,47 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Project_translator.Controllers.VoiceController",
+    "Method": "GetVoiceProfile",
+    "RelativePath": "api/Voice/profile/{langCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "langCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_translator.Controllers.VoiceController",
+    "Method": "GetAllVoiceProfiles",
+    "RelativePath": "api/Voice/profiles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Project_translator.Controllers.VoiceController",
+    "Method": "GetSpeechData",
+    "RelativePath": "api/Voice/speak",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Project_translator.Controllers.SpeechRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

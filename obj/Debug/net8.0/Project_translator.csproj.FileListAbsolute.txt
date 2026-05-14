@@ -123,4 +123,5 @@ D:\Documents\C#\Project_translator\obj\Debug\net8.0\refint\Project_translator.dl
 D:\Documents\C#\Project_translator\obj\Debug\net8.0\Project_translator.pdb
 D:\Documents\C#\Project_translator\obj\Debug\net8.0\Project_translator.genruntimeconfig.cache
 D:\Documents\C#\Project_translator\obj\Debug\net8.0\ref\Project_translator.dll
+D:\Documents\C#\Project_translator\obj\Debug\net8.0\Project_translator.sourcelink.json
 D:\Documents\C#\Project_translator\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

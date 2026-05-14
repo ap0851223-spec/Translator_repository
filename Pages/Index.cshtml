@@ -1,7 +1,7 @@
 ﻿@page
 @model Project_translator.Pages.IndexModel
 @{
-    ViewData["Title"] = "Универсальный Переводчик";
+    ViewData["Title"] = "🌐 Универсальный Переводчик с Голосом";
 }
 
 <!DOCTYPE html>
@@ -17,31 +17,235 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
     <style>
+        /* ===== ОСНОВНЫЕ СТИЛИ ===== */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --gradient-success: linear-gradient(135deg, #4cc9f0 0%, #4895ef 100%);
+            --gradient-danger: linear-gradient(135deg, #f72585 0%, #b5179e 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.15);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.2);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding-top: 20px;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
         }
 
+        /* ===== ЗАГОЛОВОК ===== */
+        .main-title {
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #fff 0%, #f0e6ff 50%, #e0ccff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* ===== КАРТОЧКИ ===== */
         .translator-card {
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+            .translator-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+            }
+
+        .card-header-custom {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+            font-weight: 600;
+            position: relative;
             overflow: hidden;
         }
 
-        .language-select {
-            font-size: 1.2rem;
-            height: 60px;
-            border: 2px solid #e0e0e0;
-        }
-
-            .language-select:focus {
-                border-color: #667eea;
-                box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+            .card-header-custom::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+                animation: headerGlow 3s ease-in-out infinite;
             }
 
-        .swap-btn {
+        @@keyframes headerGlow {
+            0%, 100% {
+                transform: translate(0, 0);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(-10%, -10%);
+                opacity: 1;
+            }
+        }
+
+        /* ===== ЯЗЫКОВЫЕ БЕЙДЖИ ===== */
+        .lang-badge {
+            font-weight: 600;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+            border-radius: 8px;
+            padding: 6px 14px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+            .lang-badge:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+        .badge-en {
+            background: linear-gradient(135deg, #4a6bff 0%, #1e40ff 100%);
+            color: white;
+        }
+
+        .badge-ru {
+            background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+            color: white;
+        }
+
+        .badge-tt {
+            background: linear-gradient(135deg, #ffa502 0%, #ff7f00 100%);
+            color: #2c3e50;
+        }
+
+        .badge-es {
+            background: linear-gradient(135deg, #ff6348 0%, #ff4757 100%);
+            color: white;
+        }
+
+        .badge-fr {
+            background: linear-gradient(135deg, #3742fa 0%, #1e90ff 100%);
+            color: white;
+        }
+
+        .badge-de {
+            background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+            color: #2c3e50;
+        }
+
+        .badge-tr {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+
+        .badge-zh {
+            background: linear-gradient(135deg, #e74c3c 0%, #ff6348 100%);
+            color: white;
+        }
+
+        .badge-auto {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            animation: autoGlow 2s ease-in-out infinite;
+        }
+
+        @@keyframes autoGlow {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(108, 117, 125, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(108, 117, 125, 0.8);
+            }
+        }
+
+        /* ===== КНОПКИ ===== */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(67, 97, 238, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-primary-custom:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(67, 97, 238, 0.5);
+                color: white;
+            }
+
+            .btn-primary-custom:active {
+                transform: translateY(0);
+            }
+
+            .btn-primary-custom::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 5px;
+                height: 5px;
+                background: rgba(255, 255, 255, 0.5);
+                opacity: 0;
+                border-radius: 100%;
+                transform: scale(1, 1) translate(-50%);
+                transform-origin: 50% 50%;
+            }
+
+            .btn-primary-custom:focus:not(:active)::after {
+                animation: ripple 1s ease-out;
+            }
+
+        @@keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 1;
+            }
+
+            20% {
+                transform: scale(25, 25);
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+
+        /* ===== ГОЛОСОВАЯ КНОПКА ===== */
+        .voice-btn {
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -49,77 +253,77 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-        }
-
-        .translate-btn {
-            height: 60px;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .result-card {
-            min-height: 150px;
-            border: 2px dashed #e0e0e0;
             transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            position: relative;
         }
 
-            .result-card.has-result {
-                border: 2px solid #28a745;
-                background: linear-gradient(135deg, #f8fff9 0%, #e8f5e9 100%);
+            .voice-btn:hover {
+                background: #f8f9fa;
+                border-color: var(--primary-color);
+                color: var(--primary-color);
+                transform: scale(1.1);
             }
 
-        .example-btn {
-            transition: all 0.3s ease;
-        }
-
-            .example-btn:hover {
-                transform: translateY(-2px);
+            .voice-btn.recording {
+                background: var(--gradient-danger);
+                color: white;
+                border-color: #f72585;
+                animation: pulse-recording 1.5s infinite;
             }
 
-        .pulse-animation {
-            animation: pulse 2s infinite;
-        }
-
-        @@keyframes pulse {
+        @@keyframes pulse-recording {
             0% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
             }
 
             70% {
-                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+                box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
             }
 
             100% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
             }
         }
 
-        .shake-animation {
-            animation: shake 0.5s ease-in-out;
+        .recording-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            color: #dc3545;
+            font-weight: 500;
+            animation: fadeIn 0.3s ease;
         }
 
-        @@keyframes shake {
+            .recording-indicator.active {
+                display: flex;
+            }
+
+        .recording-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #dc3545;
+            animation: blink 1s infinite;
+        }
+
+        @@keyframes blink {
             0%, 100% {
-                transform: translateX(0);
+                opacity: 1;
             }
 
-            25% {
-                transform: translateX(-5px);
-            }
-
-            75% {
-                transform: translateX(5px);
+            50% {
+                opacity: 0.3;
             }
         }
 
-        .fade-in-up {
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        @@keyframes fadeInUp {
+        @@keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(-10px);
             }
 
             to {
@@ -128,19 +332,93 @@
             }
         }
 
+        /* ===== ПОЛЕ ВВОДА ===== */
+        .translation-input {
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            resize: vertical;
+        }
+
+            .translation-input:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+                transform: scale(1.01);
+            }
+
+        /* ===== РЕЗУЛЬТАТ ===== */
+        .result-card {
+            min-height: 120px;
+            border: 2px dashed #e0e0e0;
+            border-radius: 12px;
+            transition: all 0.5s ease;
+            background: #f8f9fa;
+        }
+
+            .result-card.has-result {
+                border: 2px solid #28a745;
+                background: linear-gradient(135deg, #f8fff9 0%, #e8f5e9 100%);
+                animation: resultPop 0.5s ease;
+            }
+
+        @@keyframes resultPop {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ===== ИСТОРИЯ ===== */
+        .history-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+        }
+
+            .history-item:hover {
+                background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+                border-left-color: var(--primary-color);
+                transform: translateX(5px);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .history-item .history-source {
+                color: #666;
+                font-size: 0.85em;
+            }
+
+            .history-item .history-target {
+                color: var(--primary-color);
+                font-weight: 600;
+            }
+
+        /* ===== ЗАГРУЗКА ===== */
         .loading-wave {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 60px;
+            gap: 8px;
         }
 
             .loading-wave div {
-                width: 10px;
-                height: 10px;
+                width: 12px;
+                height: 12px;
                 border-radius: 50%;
-                background: #667eea;
-                margin: 0 4px;
+                background: var(--primary-color);
                 animation: wave 1.2s ease-in-out infinite;
             }
 
@@ -164,382 +442,344 @@
             }
         }
 
-        /* ========== СТИЛИ ДЛЯ ЯЗЫКОВЫХ ОБОЗНАЧЕНИЙ ========== */
+        /* ===== АНИМАЦИИ ===== */
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
 
-        .lang-badge {
-            font-weight: 600;
-            font-size: 0.9em;
-            letter-spacing: 0.5px;
-            border-radius: 6px;
-            padding: 4px 10px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @@keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-pulse {
+            animation: softPulse 2s infinite;
+        }
+
+        @@keyframes softPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+            }
+        }
+
+        .shake-animation {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @@keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-8px);
+            }
+
+            75% {
+                transform: translateX(8px);
+            }
+        }
+
+        /* ===== СЕЛЕКТОРЫ ЯЗЫКОВ ===== */
+        .language-select {
+            font-size: 1rem;
+            height: 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             transition: all 0.3s ease;
-            min-width: 42px;
-            text-align: center;
-            display: inline-block;
+            background: white;
         }
 
-            .lang-badge:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            .language-select:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
             }
 
-        .badge-en {
-            background: linear-gradient(135deg, #4a6bff 0%, #1e40ff 100%);
-            color: white;
-            border: 1px solid #3b5bff;
-        }
+            .language-select option {
+                padding: 10px;
+                font-size: 1rem;
+            }
 
-        .badge-ru {
-            background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
-            color: white;
-            border: 1px solid #ff3838;
-        }
-
-        .badge-tt {
-            background: linear-gradient(135deg, #ffa502 0%, #ff7f00 100%);
-            color: #2c3e50;
-            border: 1px solid #ff9500;
-        }
-
-        .badge-auto {
-            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-            color: white;
-            border: 1px solid #5a6268;
-            font-size: 1.2em;
-            padding: 4px 8px;
-        }
-
-        .lang-option {
+        /* ===== КНОПКА ОБМЕНА ===== */
+        .swap-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-
-            .lang-option:hover {
-                background-color: rgba(0,0,0,0.05);
-            }
-
-        .lang-display {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.95em;
-            min-width: 60px;
-            text-align: center;
-        }
-
-        .lang-display-en {
-            background: linear-gradient(135deg, rgba(74, 107, 255, 0.15) 0%, rgba(30, 64, 255, 0.15) 100%);
-            color: #1e40ff;
-            border: 1px solid rgba(30, 64, 255, 0.3);
-        }
-
-        .lang-display-ru {
-            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15) 0%, rgba(255, 56, 56, 0.15) 100%);
-            color: #ff3838;
-            border: 1px solid rgba(255, 56, 56, 0.3);
-        }
-
-        .lang-display-tt {
-            background: linear-gradient(135deg, rgba(255, 165, 2, 0.15) 0%, rgba(255, 127, 0, 0.15) 100%);
-            color: #cc6600;
-            border: 1px solid rgba(255, 127, 0, 0.3);
-        }
-
-        .lang-direction {
-            display: flex;
-            align-items: center;
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            font-size: 1.2rem;
             transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+            background: white;
+            color: var(--primary-color);
         }
 
-            .lang-direction:hover {
-                background: rgba(255, 255, 255, 0.2);
+            .swap-btn:hover {
+                background: var(--primary-color);
+                color: white;
+                border-color: var(--primary-color);
+                transform: rotate(180deg);
+            }
+
+            .swap-btn:active {
+                transform: rotate(180deg) scale(0.9);
+            }
+
+        /* ===== КНОПКА ОЗВУЧКИ ===== */
+        .speak-btn {
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #28a745;
+            color: #28a745;
+            background: white;
+        }
+
+            .speak-btn:hover {
+                background: #28a745;
+                color: white;
                 transform: translateY(-2px);
+                box-shadow: 0 4px 14px rgba(40, 167, 69, 0.4);
             }
 
-        /* Улучшенные стили для select options */
-        select option {
-            padding: 10px !important;
-        }
+            .speak-btn.speaking {
+                animation: softPulse 0.5s infinite;
+                background: #28a745;
+                color: white;
+            }
 
-        .language-select option {
-            padding: 12px !important;
-        }
-
-        /* Адаптивность */
+        /* ===== АДАПТИВНОСТЬ ===== */
         @@media (max-width: 768px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+
+            .translator-card {
+                border-radius: 15px;
+            }
+
             .lang-badge {
-                font-size: 0.8em;
-                padding: 3px 8px;
-                min-width: 36px;
-            }
-
-            .lang-display {
+                font-size: 0.75em;
                 padding: 4px 10px;
-                font-size: 0.85em;
-                min-width: 50px;
             }
 
-            .lang-direction {
-                padding: 6px 12px;
+            .voice-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Заголовок -->
-        <div class="text-center mb-4">
-            <h1 class="text-white animate__animated animate__fadeInDown mb-3">
-                <i class="bi bi-translate me-2"></i>Универсальный Переводчик
+        <!-- ===== ЗАГОЛОВОК ===== -->
+        <div class="text-center mb-4 animate__animated animate__fadeInDown">
+            <h1 class="main-title mb-2">
+                <span class="gradient-text">
+                    <i class="bi bi-translate me-2"></i>Универсальный Переводчик
+                </span>
             </h1>
-            <p class="text-white-50 lead animate__animated animate__fadeIn">
-                Бесплатный перевод между русским, английским и татарским языками
+            <p class="subtitle">
+                <i class="bi bi-mic me-1"></i> Голосовой ввод •
+                <i class="bi bi-volume-up me-1"></i> Озвучка •
+                <i class="bi bi-globe2 me-1"></i> 8 языков
             </p>
         </div>
 
-        <!-- Основной переводчик -->
-        <div class="translator-card animate__animated animate__fadeInUp">
-            <div class="card-header bg-primary text-white py-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="mb-0"><i class="bi bi-chat-left-text me-2"></i>Онлайн переводчик</h4>
-                        <small>Поддерживает все 6 направлений перевода</small>
+        <div class="row">
+            <!-- ===== ОСНОВНОЙ ПЕРЕВОДЧИК ===== -->
+            <div class="col-lg-8 mb-4">
+                <div class="translator-card animate__animated animate__fadeInUp">
+                    <!-- Шапка -->
+                    <div class="card-header-custom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">
+                                <i class="bi bi-chat-left-text me-2"></i>Онлайн переводчик
+                            </h4>
+                            <span class="badge bg-light text-primary" id="apiStatus">
+                                <i class="bi bi-check-circle me-1"></i> API онлайн
+                            </span>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <div class="spinner-grow spinner-grow-sm text-light me-2" id="apiSpinner" style="display: none;"></div>
-                        <span class="badge bg-light text-primary" id="apiStatus">API проверяется...</span>
+
+                    <!-- Тело -->
+                    <div class="card-body p-4">
+                        <!-- Поле ввода с микрофоном -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-pencil-square me-1"></i>Текст для перевода:
+                            </label>
+                            <div class="input-group">
+                                <textarea id="sourceText"
+                                          class="form-control translation-input"
+                                          rows="3"
+                                          placeholder="Введите текст или нажмите на микрофон..."></textarea>
+                                <button id="voiceInputBtn"
+                                        class="voice-btn"
+                                        title="Голосовой ввод (Ctrl+Space)"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top">
+                                    <i class="bi bi-mic"></i>
+                                </button>
+                            </div>
+                            <div class="recording-indicator mt-2" id="voiceStatus">
+                                <span class="recording-dot"></span>
+                                <span>Говорите...</span>
+                            </div>
+                        </div>
+
+                        <!-- Выбор языков -->
+                        <div class="row mb-4 align-items-end">
+                            <div class="col-5">
+                                <label class="form-label fw-bold small">
+                                    <i class="bi bi-arrow-left-circle me-1"></i>Исходный язык:
+                                </label>
+                                <select id="sourceLang" class="form-select language-select">
+                                    <option value="auto">🌍 Автоопределение</option>
+                                    <option value="ru">🇷🇺 Русский</option>
+                                    <option value="en">🇬🇧 English</option>
+                                    <option value="tt">🇹🇹 Татарский</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="fr">🇫🇷 Français</option>
+                                    <option value="de">🇩🇪 Deutsch</option>
+                                    <option value="tr">🇹🇷 Türkçe</option>
+                                    <option value="zh">🇨🇳 中文</option>
+                                </select>
+                            </div>
+                            <div class="col-2 text-center">
+                                <button id="swapBtn"
+                                        class="swap-btn"
+                                        title="Поменять языки местами">
+                                    <i class="bi bi-arrow-left-right"></i>
+                                </button>
+                            </div>
+                            <div class="col-5">
+                                <label class="form-label fw-bold small">
+                                    <i class="bi bi-arrow-right-circle me-1"></i>Целевой язык:
+                                </label>
+                                <select id="targetLang" class="form-select language-select">
+                                    <option value="en">🇬🇧 English</option>
+                                    <option value="ru">🇷🇺 Русский</option>
+                                    <option value="tt">🇹🇹 Татарский</option>
+                                    <option value="es">🇪🇸 Español</option>
+                                    <option value="fr">🇫🇷 Français</option>
+                                    <option value="de">🇩🇪 Deutsch</option>
+                                    <option value="tr">🇹🇷 Türkçe</option>
+                                    <option value="zh">🇨🇳 中文</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Кнопка перевода -->
+                        <div class="d-grid gap-2 mb-4">
+                            <button id="translateBtn" class="btn btn-primary-custom btn-lg">
+                                <i class="bi bi-arrow-repeat me-2"></i>Перевести текст
+                                <span class="spinner-border spinner-border-sm ms-2" id="translateSpinner" style="display: none;"></span>
+                            </button>
+                            <small class="text-muted text-center">
+                                <kbd>Ctrl</kbd> + <kbd>Enter</kbd> — перевести
+                            </small>
+                        </div>
+
+                        <!-- Результат -->
+                        <div id="resultContainer" class="result-card p-4">
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-translate display-4 text-muted mb-3"></i>
+                                <p class="mb-0">Здесь появится перевод</p>
+                            </div>
+                        </div>
+
+                        <!-- Кнопка озвучки -->
+                        <div id="speakButtonContainer" class="mt-3 text-center" style="display: none;">
+                            <button id="speakBtn" class="speak-btn">
+                                <i class="bi bi-volume-up me-2"></i>Озвучить перевод
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card-body p-4">
-                <!-- Поле ввода текста -->
-                <div class="mb-4">
-                    <label for="sourceText" class="form-label fw-bold">
-                        <i class="bi bi-pencil-square me-1"></i>Текст для перевода:
-                    </label>
-                    <textarea id="sourceText" class="form-control" rows="4" placeholder="Введите текст на любом языке...">Hello</textarea>
-                </div>
-
-                <!-- Выбор языков -->
-                @* <div class="alert alert-info mt-2 mb-3" style="display: none;" id="tatarInfo">
-                    <i class="bi bi-info-circle me-2"></i>
-                    <small>
-                        <strong>Примечание:</strong> Если перевод на татарский недоступен, будет показан русский вариант
-                    </small>
-                </div> *@
-
-                <!-- 2. ОБНОВЛЕННЫЙ HTML ДЛЯ ВЫБОРА ЯЗЫКОВ -->
-                <div class="row mb-4">
-                    <div class="col-md-5">
-                        <label for="sourceLang" class="form-label fw-bold">
-                            <i class="bi bi-arrow-left-circle me-1"></i>Исходный язык:
-                        </label>
-                        <select id="sourceLang" class="form-select language-select">
-                            <option value="auto">
-                                <div class="lang-option">
-                                    <span class="lang-badge badge-auto">🌍</span>
-                                    <span>Автоопределение</span>
-                                </div>
-                            </option>
-                            <option value="ru" selected>
-                                <div class="lang-option">
-                                    <span class="lang-badge badge-ru">RU</span>
-                                    <span>Русский</span>
-                                </div>
-                            </option>
-                            <option value="en">
-                                <div class="lang-option">
-                                    <span class="lang-badge badge-en">EN</span>
-                                    <span>Английский</span>
-                                </div>
-                            </option>
-                            <option value="tt">
-                                <div class="lang-option">
-                                    <span class="lang-badge badge-tt">TAT</span>
-                                    <span>Татарский</span>
-                                </div>
-                            </option>
-                        </select>
+            <!-- ===== БОКОВАЯ ПАНЕЛЬ ===== -->
+            <div class="col-lg-4">
+                <!-- История -->
+                <div class="translator-card mb-4 animate__animated animate__fadeInRight">
+                    <div class="card-header-custom" style="background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);">
+                        <h5 class="mb-0">
+                            <i class="bi bi-clock-history me-2"></i>История переводов
+                        </h5>
                     </div>
-
-                    <div class="col-md-2 text-center align-self-center">
-                        <button id="swapBtn" class="btn btn-outline-primary swap-btn mt-4" title="Поменять языки местами">
-                            <i class="bi bi-arrow-left-right"></i>
-                        </button>
-                    </div>
-
-                    <div class="col-md-5">
-                        <label for="targetLang" class="form-label fw-bold">
-                            <i class="bi bi-arrow-right-circle me-1"></i>Целевой язык:
-                        </label>
-                        <select id="targetLang" class="form-select language-select">
-                            <option value="ru">
-                                <div class="lang-option">
-                                    <span class="lang-badge badge-ru">RU</span>
-                                    <span>Русский</span>
-                                </div>
-                            </option>
-                            <option value="en">
-                                <div class="lang-option">
-                                    <span class="lang-badge badge-en">EN</span>
-                                    <span>Английский</span>
-                                </div>
-                            </option>
-                            <option value="tt" selected>
-                                <div class="lang-option">
-                                    <span class="lang-badge badge-tt">TAT</span>
-                                    <span>Татарский</span>
-                                </div>
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Кнопка перевода -->
-                <div class="d-grid gap-2 mb-4">
-                    <button id="translateBtn" class="btn btn-success translate-btn pulse-animation">
-                        <i class="bi bi-arrow-repeat me-2"></i>Перевести текст
-                        <span class="spinner-border spinner-border-sm ms-2" id="translateSpinner" style="display: none;"></span>
-                    </button>
-                </div>
-
-                <!-- Результат перевода -->
-                <div class="mb-4">
-                    <label class="form-label fw-bold">
-                        <i class="bi bi-translate me-1"></i>Результат перевода:
-                    </label>
-                    <div id="result" class="result-card p-4">
-                        <div class="text-center text-muted py-4">
-                            <i class="bi bi-translate display-4 text-muted mb-3"></i>
-                            <p class="mb-0">Здесь появится перевод</p>
+                    <div class="card-body" id="historyContainer" style="max-height: 400px; overflow-y: auto;">
+                        <div class="text-center text-muted py-3">
+                            <i class="bi bi-hourglass fs-3 mb-2"></i>
+                            <p class="small mb-0">История появится после переводов</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. ОБНОВЛЕННЫЙ РАЗДЕЛ "БЫСТРЫЕ ПРИМЕРЫ" -->
-                <div class="mb-4">
-                    <label class="form-label fw-bold">
-                        <i class="bi bi-lightning me-1"></i>Быстрые примеры всех направлений:
-                    </label>
-                    <div class="row g-2">
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-primary w-100 example-btn test-example"
-                                    data-text="Hello" data-source="en" data-target="ru">
-                                <span class="lang-display lang-display-en">EN</span>
-                                <i class="bi bi-arrow-right mx-2"></i>
-                                <span class="lang-display lang-display-ru">RU</span>
-                                Hello → Привет
-                            </button>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-success w-100 example-btn test-example"
-                                    data-text="Hello" data-source="en" data-target="tt">
-                                <span class="lang-display lang-display-en">EN</span>
-                                <i class="bi bi-arrow-right mx-2"></i>
-                                <span class="lang-display lang-display-tt">TAT</span>
-                                Hello → Сәлам
-                            </button>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-warning w-100 example-btn test-example"
-                                    data-text="Привет" data-source="ru" data-target="en">
-                                <span class="lang-display lang-display-ru">RU</span>
-                                <i class="bi bi-arrow-right mx-2"></i>
-                                <span class="lang-display lang-display-en">EN</span>
-                                Привет → Hello
-                            </button>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-danger w-100 example-btn test-example"
-                                    data-text="Привет" data-source="ru" data-target="tt">
-                                <span class="lang-display lang-display-ru">RU</span>
-                                <i class="bi bi-arrow-right mx-2"></i>
-                                <span class="lang-display lang-display-tt">TAT</span>
-                                Привет → Сәлам
-                            </button>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-info w-100 example-btn test-example"
-                                    data-text="Сәлам" data-source="tt" data-target="en">
-                                <span class="lang-display lang-display-tt">TAT</span>
-                                <i class="bi bi-arrow-right mx-2"></i>
-                                <span class="lang-display lang-display-en">EN</span>
-                                Сәлам → Hello
-                            </button>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-outline-dark w-100 example-btn test-example"
-                                    data-text="Рәхмәт" data-source="tt" data-target="ru">
-                                <span class="lang-display lang-display-tt">TAT</span>
-                                <i class="bi bi-arrow-right mx-2"></i>
-                                <span class="lang-display lang-display-ru">RU</span>
-                                Рәхмәт → Спасибо
-                            </button>
-                        </div>
+                <!-- Статистика -->
+                <div class="translator-card animate__animated animate__fadeInRight" style="animation-delay: 0.2s;">
+                    <div class="card-header-custom" style="background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%);">
+                        <h5 class="mb-0">
+                            <i class="bi bi-bar-chart me-2"></i>Статистика памяти
+                        </h5>
                     </div>
-                </div>
-
-                <!-- Дополнительные кнопки -->
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <button id="clearBtn" class="btn btn-outline-secondary">
-                            <i class="bi bi-eraser me-1"></i>Очистить всё
-                        </button>
-                        <button id="copyBtn" class="btn btn-outline-secondary ms-2" style="display: none;">
-                            <i class="bi bi-clipboard me-1"></i>Копировать перевод
-                        </button>
-                    </div>
-                    <div class="text-end">
-                        <small class="text-muted">
-                            <i class="bi bi-clock me-1"></i>
-                            Время: <span id="translationTime">-</span>мс
-                        </small>
+                    <div class="card-body" id="statsContainer">
+                        <div class="text-center text-muted py-3">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                            <p class="small mt-2 mb-0">Загрузка...</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. ОБНОВЛЕННЫЙ РАЗДЕЛ "ПОДДЕРЖИВАЕМЫЕ НАПРАВЛЕНИЯ" -->
+        <!-- ===== ПОДДЕРЖИВАЕМЫЕ ЯЗЫКИ ===== -->
         <div class="row mt-4">
             <div class="col-12">
-                <div class="card border-0 bg-transparent text-white">
-                    <div class="card-body text-center">
-                        <h5 class="mb-3">Поддерживаемые направления перевода:</h5>
-                        <div class="d-flex flex-wrap justify-content-center gap-3">
-                            <div class="lang-direction">
-                                <span class="lang-display lang-display-en me-2">EN</span>
-                                <i class="bi bi-arrow-left-right text-white-50 me-2"></i>
-                                <span class="lang-display lang-display-ru">RU</span>
-                            </div>
-                            <div class="lang-direction">
-                                <span class="lang-display lang-display-en me-2">EN</span>
-                                <i class="bi bi-arrow-left-right text-white-50 me-2"></i>
-                                <span class="lang-display lang-display-tt">TAT</span>
-                            </div>
-                            <div class="lang-direction">
-                                <span class="lang-display lang-display-ru me-2">RU</span>
-                                <i class="bi bi-arrow-left-right text-white-50 me-2"></i>
-                                <span class="lang-display lang-display-tt">TAT</span>
-                            </div>
-                        </div>
-                        <p class="mt-3 text-white-50 mb-0">
-                            <small>Всего 6 направлений перевода между 3 языками</small>
-                        </p>
+                <div class="text-center">
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <span class="lang-badge badge-en">🇬🇧 English</span>
+                        <span class="lang-badge badge-ru">🇷🇺 Русский</span>
+                        <span class="lang-badge badge-tt">🇹🇹 Татарский</span>
+                        <span class="lang-badge badge-es">🇪🇸 Español</span>
+                        <span class="lang-badge badge-fr">🇫🇷 Français</span>
+                        <span class="lang-badge badge-de">🇩🇪 Deutsch</span>
+                        <span class="lang-badge badge-tr">🇹🇷 Türkçe</span>
+                        <span class="lang-badge badge-zh">🇨🇳 中文</span>
                     </div>
+                    <p class="text-white-50 mt-3 mb-0">
+                        <small>Всего 56 направлений перевода • MyMemory API • Память переводов</small>
+                    </p>
                 </div>
             </div>
         </div>
@@ -547,144 +787,254 @@
         <!-- Футер -->
         <footer class="text-center text-white mt-4 pb-4">
             <small>
-                <i class="bi bi-c-circle me-1"></i>Система перевода © 2025 |
+                <i class="bi bi-c-circle me-1"></i>Система перевода © 2026 |
                 <i class="bi bi-database ms-2 me-1"></i>PostgreSQL |
                 <i class="bi bi-cloud ms-2 me-1"></i>MyMemory API |
-                <i class="bi bi-translate ms-2 me-1"></i>EN • RU • TAT
+                <i class="bi bi-mic ms-2 me-1"></i>Web Speech API
             </small>
         </footer>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Основной JavaScript -->
     <script>
+        // 
+        // 
+        // 
+
         // Глобальные переменные
-        let isTranslating = false;
-        let lastTranslation = '';
+        let recognition = null;
+        let isRecording = false;
+        let currentTranslation = null;
+        let isSpeaking = false;
 
-        // ===== ОСНОВНАЯ ИНИЦИАЛИЗАЦИЯ =====
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Переводчик загружен!');
+            console.log('🌐 Универсальный переводчик загружен!');
 
-            // Инициализация всех элементов
-            initTranslator();
+            initVoiceRecognition();
+            initEventListeners();
+            loadHistory();
+            loadStats();
+            initTooltips();
 
-            // Проверить статус API
-            checkAPIStatus();
-
-            // Автоматический тест при загрузке
+            // Тестовый перевод при загрузке
             setTimeout(() => {
-                console.log('🔧 Запуск автоматического теста...');
+                document.getElementById('sourceText').value = 'Hello';
+                document.getElementById('sourceLang').value = 'en';
+                document.getElementById('targetLang').value = 'ru';
                 performTranslation();
-            }, 1000);
+            }, 800);
         });
 
-        // ===== ИНИЦИАЛИЗАЦИЯ ПЕРЕВОДЧИКА =====
-        function initTranslator() {
-            // 1. Кнопка перевода
-            const translateBtn = document.getElementById('translateBtn');
-            if (translateBtn) {
-                translateBtn.addEventListener('click', performTranslation);
-                console.log('✅ Кнопка перевода инициализирована');
-            }
-
-            // 2. Кнопка обмена языков
-            const swapBtn = document.getElementById('swapBtn');
-            if (swapBtn) {
-                swapBtn.addEventListener('click', swapLanguages);
-                console.log('✅ Кнопка обмена языков инициализирована');
-            }
-
-            // 3. Быстрые примеры
-            document.querySelectorAll('.test-example').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const text = this.getAttribute('data-text');
-                    const source = this.getAttribute('data-source');
-                    const target = this.getAttribute('data-target');
-                    loadExample(text, source, target);
-                });
+        function initTooltips() {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
             });
-
-            // 4. Кнопка очистки
-            const clearBtn = document.getElementById('clearBtn');
-            if (clearBtn) {
-                clearBtn.addEventListener('click', clearAll);
-                console.log('✅ Кнопка очистки инициализирована');
-            }
-
-            // 5. Кнопка копирования
-            const copyBtn = document.getElementById('copyBtn');
-            if (copyBtn) {
-                copyBtn.addEventListener('click', copyTranslation);
-                console.log('✅ Кнопка копирования инициализирована');
-            }
-
-            // 6. Горячая клавиша Ctrl+Enter
-            document.getElementById('sourceText').addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'Enter') {
-                    e.preventDefault();
-                    console.log('⌨️ Горячая клавиша Ctrl+Enter активирована');
-                    performTranslation();
-                }
-            });
-
-            // 7. Информация о татарском fallback
-            document.getElementById('targetLang').addEventListener('change', function() {
-                const tatarInfo = document.getElementById('tatarInfo');
-                if (this.value === 'tt') {
-                    tatarInfo.style.display = 'block';
-                } else {
-                    tatarInfo.style.display = 'none';
-                }
-            });
-
-            console.log('🎯 Переводчик полностью инициализирован!');
         }
 
-        // ===== ОСНОВНАЯ ФУНКЦИЯ ПЕРЕВОДА =====
-        async function performTranslation() {
-            console.log('🔄 Вызов функции перевода...');
+        // ===== ГОЛОСОВОЙ ВВОД =====
+        function initVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
 
-            if (isTranslating) {
-                console.log('⚠️ Перевод уже выполняется');
+                recognition.continuous = false;
+                recognition.interimResults = true;
+                updateRecognitionLanguage();
+
+                recognition.onstart = () => {
+                    isRecording = true;
+                    const btn = document.getElementById('voiceInputBtn');
+                    btn.classList.add('recording');
+                    btn.querySelector('i').classList.replace('bi-mic', 'bi-record-circle');
+
+                    document.getElementById('voiceStatus').classList.add('active');
+                    document.getElementById('sourceText').placeholder = '🎤 Слушаю...';
+                    console.log('🎤 Запись начата');
+                };
+
+                recognition.onresult = (event) => {
+                    let finalTranscript = '';
+
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const transcript = event.results[i][0].transcript;
+                        if (event.results[i].isFinal) {
+                            finalTranscript += transcript;
+                        }
+                    }
+
+                    if (finalTranscript) {
+                        document.getElementById('sourceText').value = finalTranscript;
+                    //    document.getElementById('sourceLang').value = 'auto';
+                        console.log('📝 Распознано:', finalTranscript);
+
+                        stopRecording();
+
+                        // Анимация и перевод
+                        document.getElementById('sourceText').classList.add('animate__animated', 'animate__pulse');
+                        setTimeout(() => {
+                            document.getElementById('sourceText').classList.remove('animate__animated', 'animate__pulse');
+                        }, 500);
+
+                        setTimeout(performTranslation, 500);
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('❌ Ошибка распознавания:', event.error);
+                    stopRecording();
+
+                    const errors = {
+                        'no-speech': 'Речь не обнаружена 😶',
+                        'audio-capture': 'Микрофон не найден 🎤❌',
+                        'not-allowed': 'Доступ к микрофону запрещен 🔒',
+                        'network': 'Ошибка сети 🌐❌'
+                    };
+
+                    showAlert(errors[event.error] || 'Ошибка распознавания речи', 'danger');
+                };
+
+                recognition.onend = () => stopRecording();
+
+                console.log('✅ Голосовой ввод готов');
+            } else {
+                document.getElementById('voiceInputBtn').style.display = 'none';
+                console.warn('⚠️ Speech Recognition не поддерживается');
+            }
+        }
+
+        function updateRecognitionLanguage() {
+            if (!recognition) return;
+
+            const langMap = {
+                'ru': 'ru-RU', 'en': 'en-US', 'tt': 'ru-RU',
+                'es': 'es-ES', 'fr': 'fr-FR', 'de': 'de-DE',
+                'tr': 'tr-TR', 'zh': 'zh-CN', 'auto': 'en-US'
+            };
+
+            recognition.lang = langMap[document.getElementById('sourceLang').value] || 'en-US';
+        }
+
+        function startRecording() {
+            if (!recognition) {
+                showAlert('Голосовой ввод не поддерживается браузером', 'warning');
                 return;
             }
 
+            try {
+                recognition.start();
+            } catch (error) {
+                console.error('❌ Ошибка запуска записи:', error);
+                stopRecording();
+            }
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            const btn = document.getElementById('voiceInputBtn');
+            btn.classList.remove('recording');
+            btn.querySelector('i').classList.replace('bi-record-circle', 'bi-mic');
+            document.getElementById('voiceStatus').classList.remove('active');
+            document.getElementById('sourceText').placeholder = 'Введите текст или нажмите на микрофон...';
+            console.log('🎤 Запись остановлена');
+        }
+
+        // ===== ОЗВУЧКА ПЕРЕВОДА =====
+        function speakTranslation(text, lang) {
+            if (!('speechSynthesis' in window)) {
+                showAlert('Озвучка не поддерживается браузером', 'warning');
+                return;
+            }
+
+            // Останавливаем текущую озвучку
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            const speakBtn = document.getElementById('speakBtn');
+
+            // Получаем профиль озвучки
+            fetch(`/api/Voice/profile/${lang}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const profile = data.profile;
+                        utterance.lang = profile.lang;
+                        utterance.rate = profile.rate;
+                        utterance.pitch = profile.recommendations?.pitch || 1.0;
+                        utterance.volume = profile.recommendations?.volume || 1.0;
+
+                        const voices = window.speechSynthesis.getVoices();
+                        const match = voices.find(v => v.lang.startsWith(profile.lang.split('-')[0]));
+                        if (match) utterance.voice = match;
+                    }
+
+                    // Анимация кнопки
+                    speakBtn.classList.add('speaking');
+                    utterance.onstart = () => { isSpeaking = true; };
+                    utterance.onend = () => {
+                        isSpeaking = false;
+                        speakBtn.classList.remove('speaking');
+                    };
+
+                    window.speechSynthesis.speak(utterance);
+                    console.log('🔊 Озвучка:', text.substring(0, 50));
+                })
+                .catch(() => {
+                    utterance.lang = getLangTag(lang);
+                    window.speechSynthesis.speak(utterance);
+                });
+        }
+
+        function getLangTag(langCode) {
+            const map = {
+                'ru': 'ru-RU', 'en': 'en-US', 'tt': 'ru-RU',
+                'es': 'es-ES', 'fr': 'fr-FR', 'de': 'de-DE',
+                'tr': 'tr-TR', 'zh': 'zh-CN'
+            };
+            return map[langCode] || 'en-US';
+        }
+
+        // ===== ПЕРЕВОД =====
+        async function performTranslation() {
             const text = document.getElementById('sourceText').value.trim();
             const sourceLang = document.getElementById('sourceLang').value;
             const targetLang = document.getElementById('targetLang').value;
 
-            console.log(`📝 Перевод: "${text}" (${sourceLang} -> ${targetLang})`);
-
-            // Валидация
             if (!text) {
-                showError('Введите текст для перевода');
-                shakeElement('sourceText');
+                showAlert('Введите текст для перевода ✍️', 'warning');
+                document.getElementById('sourceText').classList.add('shake-animation');
+                setTimeout(() => document.getElementById('sourceText').classList.remove('shake-animation'), 500);
                 return;
             }
 
             if (sourceLang === targetLang && sourceLang !== 'auto') {
-                showError('Исходный и целевой язык совпадают');
+                showAlert('Исходный и целевой языки совпадают 🤔', 'warning');
                 return;
             }
 
-            // Начинаем перевод
-            isTranslating = true;
-            const startTime = Date.now();
+            // Показываем загрузку
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="loading-wave">
+                        <div></div><div></div><div></div>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">Переводим текст...</p>
+                </div>
+            `;
 
-            // Показать состояние загрузки
-            showLoading();
+            // Активируем спиннер
+            document.getElementById('translateSpinner').style.display = 'inline-block';
+            document.getElementById('translateBtn').disabled = true;
+
+            const startTime = performance.now();
 
             try {
-                console.log('📤 Отправка запроса к /api/QuickTranslate/translate...');
-
                 const response = await fetch('/api/QuickTranslate/translate', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         Text: text,
                         SourceLang: sourceLang,
@@ -692,302 +1042,273 @@
                     })
                 });
 
-                console.log('📥 Получен ответ:', response.status);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ошибка: ${response.status} ${response.statusText}`);
-                }
-
                 const data = await response.json();
-                console.log('✅ Данные ответа:', data);
+                const elapsed = Math.round(performance.now() - startTime);
 
                 if (data.success) {
-                    // Сохраняем перевод
-                    lastTranslation = data.translated;
+                    currentTranslation = data;
 
-                    // Показать результат с красивыми языковыми обозначениями
-                    showTranslationResult(data.original, data.translated, data.source, data.target);
+                    // Получаем классы для языковых бейджей
+                    const sourceClass = getLangBadgeClass(data.source);
+                    const targetClass = getLangBadgeClass(data.target);
 
-                    // Обновить время
-                    const elapsedTime = Date.now() - startTime;
-                    document.getElementById('translationTime').textContent = elapsedTime;
+                    resultContainer.innerHTML = `
+                        <div class="animate-fade-in-up">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="lang-badge ${sourceClass}">${data.source.toUpperCase()}</span>
+                                    <i class="bi bi-arrow-right text-muted fs-5"></i>
+                                    <span class="lang-badge ${targetClass}">${data.target.toUpperCase()}</span>
+                                </div>
+                                <small class="text-muted">
+                                    <i class="bi bi-clock me-1"></i>${elapsed}мс
+                                </small>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted">Исходный текст:</small>
+                                <div class="p-3 bg-light rounded mt-1">${escapeHtml(data.original)}</div>
+                            </div>
+                            <div>
+                                <small class="text-muted">Перевод:</small>
+                                <div class="p-3 rounded mt-1" style="background: linear-gradient(135deg, #f0fff4 0%, #e8f5e9 100%); border: 1px solid #28a745;">
+                                    <h5 class="text-success mb-0">${escapeHtml(data.translated)}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    `;
 
-                    // Показать кнопку копирования
-                    document.getElementById('copyBtn').style.display = 'inline-block';
+                    resultContainer.classList.add('has-result');
 
-                    console.log('🎉 Перевод успешен!');
+                    // Показываем кнопку озвучки
+                    document.getElementById('speakButtonContainer').style.display = 'block';
+
+                    // Авто-озвучка
+                    setTimeout(() => speakTranslation(data.translated, data.target), 300);
+
+                    // Обновляем историю и статистику
+                    setTimeout(() => {
+                        loadHistory();
+                        loadStats();
+                    }, 500);
+
                 } else {
-                    throw new Error(data.error || 'Ошибка перевода');
+                    resultContainer.innerHTML = `
+                        <div class="text-center py-4 text-danger">
+                            <i class="bi bi-exclamation-triangle display-4 mb-3"></i>
+                            <h5>Ошибка перевода</h5>
+                            <p class="mb-0">${escapeHtml(data.error || 'Неизвестная ошибка')}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('❌ Ошибка:', error);
+                resultContainer.innerHTML = `
+                    <div class="text-center py-4 text-danger">
+                        <i class="bi bi-wifi-off display-4 mb-3"></i>
+                        <h5>Ошибка соединения</h5>
+                        <p class="mb-0">Проверьте подключение к интернету</p>
+                    </div>
+                `;
+            } finally {
+                document.getElementById('translateSpinner').style.display = 'none';
+                document.getElementById('translateBtn').disabled = false;
+            }
+        }
+
+        function getLangBadgeClass(langCode) {
+            const map = {
+                'ru': 'badge-ru', 'en': 'badge-en', 'tt': 'badge-tt',
+                'es': 'badge-es', 'fr': 'badge-fr', 'de': 'badge-de',
+                'tr': 'badge-tr', 'zh': 'badge-zh', 'auto': 'badge-auto'
+            };
+            return map[langCode] || 'badge-auto';
+        }
+
+        // ===== ИСТОРИЯ =====
+        async function loadHistory() {
+            const source = document.getElementById('sourceLang').value;
+            const target = document.getElementById('targetLang').value;
+            const container = document.getElementById('historyContainer');
+
+            try {
+                const response = await fetch(`/api/TranslationMemory/history?source=${source}&target=${target}&limit=10`);
+                const data = await response.json();
+
+                if (data.success && data.history.length > 0) {
+                    container.innerHTML = data.history.map((item, index) => `
+                        <div class="history-item animate-fade-in-up"
+                             style="animation-delay: ${index * 0.05}s"
+                             onclick="loadHistoryItem('${escapeHtml(item.sourceText)}', '${escapeHtml(item.targetText)}')"
+                             title="Нажмите для перевода">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="flex-grow-1">
+                                    <div class="history-source">${escapeHtml(item.sourceText.substring(0, 40))}${item.sourceText.length > 40 ? '...' : ''}</div>
+                                    <div class="history-target">${escapeHtml(item.targetText.substring(0, 40))}${item.targetText.length > 40 ? '...' : ''}</div>
+                                </div>
+                                <small class="text-muted ms-2">×${item.usageCount}</small>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = `
+                        <div class="text-center text-muted py-3">
+                            <i class="bi bi-hourglass fs-3 mb-2"></i>
+                            <p class="small mb-0">История пуста</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки истории:', error);
+            }
+        }
+
+        function loadHistoryItem(sourceText, targetText) {
+            document.getElementById('sourceText').value = sourceText;
+            document.getElementById('sourceText').classList.add('animate__animated', 'animate__flash');
+            setTimeout(() => document.getElementById('sourceText').classList.remove('animate__animated', 'animate__flash'), 500);
+            performTranslation();
+        }
+
+        // ===== СТАТИСТИКА =====
+        async function loadStats() {
+            const container = document.getElementById('statsContainer');
+
+            try {
+                const response = await fetch('/api/TranslationMemory/stats');
+                const data = await response.json();
+
+                if (data.success) {
+                    container.innerHTML = `
+                        <div class="animate-fade-in-up">
+                            <div class="row text-center mb-3">
+                                <div class="col-6">
+                                    <div class="h3 text-primary mb-0">${data.totalMemories}</div>
+                                    <small class="text-muted">Записей</small>
+                                </div>
+                                <div class="col-6">
+                                    <div class="h3 text-success mb-0">${data.totalUsage}</div>
+                                    <small class="text-muted">Использований</small>
+                                </div>
+                            </div>
+                            <hr>
+                            <small class="text-muted">Популярные направления:</small>
+                            ${data.topLanguagePairs.slice(0, 5).map((pair, i) => `
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span>
+                                        <span class="lang-badge ${getLangBadgeClass(pair.source)} badge-sm">${pair.source}</span>
+                                        <i class="bi bi-arrow-right mx-1 small"></i>
+                                        <span class="lang-badge ${getLangBadgeClass(pair.target)} badge-sm">${pair.target}</span>
+                                    </span>
+                                    <small class="text-muted">${pair.count}</small>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки статистики:', error);
+            }
+        }
+
+        // ===== ОБРАБОТЧИКИ СОБЫТИЙ =====
+        function initEventListeners() {
+            // Перевод
+            document.getElementById('translateBtn').addEventListener('click', performTranslation);
+
+            // Голос
+            document.getElementById('voiceInputBtn').addEventListener('click', () => {
+                if (isRecording) {
+                    if (recognition) recognition.stop();
+                    stopRecording();
+                } else {
+                    updateRecognitionLanguage();
+                    startRecording();
+                }
+            });
+
+            // Обмен языков
+            document.getElementById('swapBtn').addEventListener('click', () => {
+                const source = document.getElementById('sourceLang');
+                const target = document.getElementById('targetLang');
+
+                if (source.value === 'auto') {
+                    showAlert('Нельзя поменять автоопределение', 'warning');
+                    return;
                 }
 
-            } catch (error) {
-                console.error('❌ Ошибка перевода:', error);
-                showError(getErrorMessage(error));
-            } finally {
-                // Скрыть загрузку
-                hideLoading();
-                isTranslating = false;
+                [source.value, target.value] = [target.value, source.value];
 
-                console.log('🏁 Перевод завершен');
-            }
+                // Анимация кнопки
+                const btn = document.getElementById('swapBtn');
+                btn.style.transform = 'rotate(180deg)';
+                setTimeout(() => btn.style.transform = 'rotate(0deg)', 300);
+
+                updateRecognitionLanguage();
+                loadHistory();
+            });
+
+            // Изменение языка
+            document.getElementById('sourceLang').addEventListener('change', () => {
+                updateRecognitionLanguage();
+                loadHistory();
+            });
+
+            document.getElementById('targetLang').addEventListener('change', () => {
+                loadHistory();
+            });
+
+            // Озвучка
+            document.getElementById('speakBtn').addEventListener('click', () => {
+                if (currentTranslation && !isSpeaking) {
+                    speakTranslation(currentTranslation.translated, currentTranslation.target);
+                }
+            });
+
+            // Горячие клавиши
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    performTranslation();
+                }
+                if (e.ctrlKey && e.code === 'Space') {
+                    e.preventDefault();
+                    document.getElementById('voiceInputBtn').click();
+                }
+            });
+
+            // Enter в поле ввода
+            document.getElementById('sourceText').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    performTranslation();
+                }
+            });
         }
 
         // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+        function showAlert(message, type = 'info') {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show animate__animated animate__fadeInDown position-fixed"
+                     style="top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; min-width: 300px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);"
+                     role="alert">
+                    <i class="bi ${type === 'danger' ? 'bi-exclamation-triangle' : type === 'warning' ? 'bi-exclamation-circle' : 'bi-info-circle'} me-2"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
 
-        // Обмен языков местами
-        function swapLanguages() {
-            const sourceLang = document.getElementById('sourceLang');
-            const targetLang = document.getElementById('targetLang');
-            const sourceText = document.getElementById('sourceText');
+            document.body.insertAdjacentHTML('beforeend', alertHtml);
 
-            // Сохраняем значения
-            const tempSource = sourceLang.value;
-            const tempTarget = targetLang.value;
-            const currentText = sourceText.value;
-
-            // Меняем местами
-            sourceLang.value = tempTarget === 'auto' ? 'auto' : tempTarget;
-            targetLang.value = tempSource;
-
-            // Если есть текст и предыдущий перевод
-            if (currentText && lastTranslation) {
-                sourceText.value = lastTranslation;
-                lastTranslation = currentText;
-            }
-
-            // Анимация
-            const swapBtn = document.getElementById('swapBtn');
-            swapBtn.classList.add('animate__animated', 'animate__flip');
             setTimeout(() => {
-                swapBtn.classList.remove('animate__animated', 'animate__flip');
-            }, 500);
-
-            console.log('🔄 Языки обменяны местами');
-
-            // Автоматический перевод если есть текст
-            if (sourceText.value.trim()) {
-                setTimeout(performTranslation, 300);
-            }
-        }
-
-        // Загрузка примера
-        function loadExample(text, sourceLang, targetLang) {
-            console.log(`🧪 Пример: ${text} (${sourceLang} → ${targetLang})`);
-
-            // Установить значения
-            document.getElementById('sourceText').value = text;
-            document.getElementById('sourceLang').value = sourceLang;
-            document.getElementById('targetLang').value = targetLang;
-
-            // Анимация
-            const sourceText = document.getElementById('sourceText');
-            sourceText.classList.add('animate__animated', 'animate__pulse');
-            setTimeout(() => {
-                sourceText.classList.remove('animate__animated', 'animate__pulse');
-            }, 1000);
-
-            // Запустить перевод
-            setTimeout(performTranslation, 300);
-        }
-
-        // Очистить всё
-        function clearAll() {
-            document.getElementById('sourceText').value = '';
-            document.getElementById('result').innerHTML = `
-                <div class="text-center text-muted py-4">
-                    <i class="bi bi-translate display-4 text-muted mb-3"></i>
-                    <p class="mb-0">Здесь появится перевод</p>
-                </div>
-            `;
-            document.getElementById('result').classList.remove('has-result');
-            document.getElementById('copyBtn').style.display = 'none';
-            document.getElementById('translationTime').textContent = '-';
-            lastTranslation = '';
-
-            console.log('🧹 Все поля очищены');
-        }
-
-        // Копировать перевод
-        async function copyTranslation() {
-            if (!lastTranslation) return;
-
-            try {
-                await navigator.clipboard.writeText(lastTranslation);
-
-                // Визуальная обратная связь
-                const copyBtn = document.getElementById('copyBtn');
-                const originalHtml = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="bi bi-check me-1"></i>Скопировано!';
-                copyBtn.classList.add('btn-success');
-                copyBtn.classList.remove('btn-outline-secondary');
-
-                // Анимация
-                copyBtn.classList.add('animate__animated', 'animate__bounce');
-
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalHtml;
-                    copyBtn.classList.remove('btn-success', 'animate__animated', 'animate__bounce');
-                    copyBtn.classList.add('btn-outline-secondary');
-                }, 2000);
-
-                console.log('📋 Перевод скопирован');
-
-            } catch (error) {
-                console.error('❌ Ошибка копирования:', error);
-                showError('Не удалось скопировать текст');
-            }
-        }
-
-        // ===== ФУНКЦИИ ОТОБРАЖЕНИЯ =====
-
-        // 5. ОБНОВЛЕННЫЙ JAVASCRIPT ДЛЯ ОТОБРАЖЕНИЯ ЯЗЫКОВ В РЕЗУЛЬТАТАХ
-        function showTranslationResult(original, translated, sourceLang, targetLang) {
-            const resultDiv = document.getElementById('result');
-
-            // Маппинг языковых кодов на классы стилей
-            const langClasses = {
-                'en': 'lang-display-en',
-                'ru': 'lang-display-ru',
-                'tt': 'lang-display-tt',
-                'auto': ''
-            };
-
-            const sourceClass = langClasses[sourceLang] || '';
-            const targetClass = langClasses[targetLang] || '';
-
-            resultDiv.innerHTML = `
-                <div class="fade-in-up">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="lang-display ${sourceClass}">
-                                ${sourceLang.toUpperCase()}
-                            </div>
-                            <i class="bi bi-arrow-right fs-4 text-muted"></i>
-                            <div class="lang-display ${targetClass}">
-                                ${targetLang.toUpperCase()}
-                            </div>
-                        </div>
-                        <small class="text-muted">
-                            <i class="bi bi-check-circle text-success me-1"></i>Перевод успешен
-                        </small>
-                    </div>
-
-                    <div class="mb-3">
-                        <small class="text-muted">Исходный текст:</small>
-                        <div class="p-3 bg-light border rounded mt-1">
-                            ${escapeHtml(original)}
-                        </div>
-                    </div>
-
-                    <div>
-                        <small class="text-muted">Перевод:</small>
-                        <div class="p-3 bg-success bg-opacity-10 border border-success rounded mt-1">
-                            <h5 class="text-success mb-0">${escapeHtml(translated)}</h5>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            // Добавить класс с результатом
-            resultDiv.classList.add('has-result');
-        }
-
-        // Показать загрузку
-        function showLoading() {
-            const translateBtn = document.getElementById('translateBtn');
-            const translateSpinner = document.getElementById('translateSpinner');
-            const resultDiv = document.getElementById('result');
-
-            translateBtn.disabled = true;
-            translateSpinner.style.display = 'inline-block';
-
-            resultDiv.innerHTML = `
-                <div class="text-center py-4">
-                    <div class="loading-wave mb-3">
-                        <div></div><div></div><div></div>
-                    </div>
-                    <p class="text-muted mb-0">Переводим текст...</p>
-                </div>
-            `;
-        }
-
-        // Скрыть загрузку
-        function hideLoading() {
-            const translateBtn = document.getElementById('translateBtn');
-            const translateSpinner = document.getElementById('translateSpinner');
-
-            translateBtn.disabled = false;
-            translateSpinner.style.display = 'none';
-        }
-
-        // Показать ошибку
-        function showError(message) {
-            const resultDiv = document.getElementById('result');
-
-            resultDiv.innerHTML = `
-                <div class="alert alert-danger shake-animation">
-                    <div class="d-flex">
-                        <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
-                        <div>
-                            <h5 class="alert-heading">Ошибка</h5>
-                            <p class="mb-0">${escapeHtml(message)}</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Получить понятное сообщение об ошибке
-        function getErrorMessage(error) {
-            if (error.message.includes('Failed to fetch') || error.message.includes('Network')) {
-                return 'Ошибка соединения. Проверьте интернет.';
-            } else if (error.message.includes('HTTP')) {
-                return 'Ошибка сервера. Попробуйте позже.';
-            } else {
-                return error.message;
-            }
-        }
-
-        // Анимация тряски
-        function shakeElement(elementId) {
-            const element = document.getElementById(elementId);
-            if (element) {
-                element.classList.add('shake-animation');
-                setTimeout(() => {
-                    element.classList.remove('shake-animation');
-                }, 1000);
-            }
-        }
-
-        // Проверить статус API
-        async function checkAPIStatus() {
-            const apiSpinner = document.getElementById('apiSpinner');
-            const apiStatus = document.getElementById('apiStatus');
-
-            try {
-                apiSpinner.style.display = 'inline-block';
-
-                const response = await fetch('/api/QuickTranslate/status');
-                const data = await response.json();
-
-                if (data.status === 'online') {
-                    apiStatus.textContent = 'API онлайн';
-                    apiStatus.className = 'badge bg-success';
-                    console.log('✅ API работает');
-                } else {
-                    apiStatus.textContent = 'API проблемы';
-                    apiStatus.className = 'badge bg-warning';
+                const alert = document.querySelector('.alert-dismissible');
+                if (alert) {
+                    alert.classList.remove('animate__fadeInDown');
+                    alert.classList.add('animate__fadeOutUp');
+                    setTimeout(() => alert.remove(), 300);
                 }
-            } catch (error) {
-                apiStatus.textContent = 'API недоступен';
-                apiStatus.className = 'badge bg-danger';
-                console.error('❌ API недоступен:', error);
-            } finally {
-                apiSpinner.style.display = 'none';
-            }
+            }, 3000);
         }
 
-        // Экранирование HTML
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -995,13 +1316,11 @@
             return div.innerHTML;
         }
 
-        // Сделать функции глобальными для отладки
+        // Глобальные функции
         window.performTranslation = performTranslation;
-        window.swapLanguages = swapLanguages;
-        window.clearAll = clearAll;
-        window.copyTranslation = copyTranslation;
 
-        console.log('🌟 Переводчик готов к использованию!');
+        console.log('🌟 Универсальный переводчик готов!');
+        console.log('💡 Используйте Ctrl+Enter для перевода, Ctrl+Space для голосового ввода');
     </script>
 </body>
 </html>

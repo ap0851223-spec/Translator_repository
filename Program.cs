@@ -33,6 +33,13 @@ builder.Services.AddScoped<ITranslationService>(provider =>
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
+// Добавьте новые сервисы:
+builder.Services.AddScoped<IVoiceService, VoiceService>();
+builder.Services.AddScoped<ILanguageDetectionService, LanguageDetectionService>();
+
+// Добавьте Memory Cache для кэширования голосовых профилей
+builder.Services.AddMemoryCache();
+
 // Настройка логгирования
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
