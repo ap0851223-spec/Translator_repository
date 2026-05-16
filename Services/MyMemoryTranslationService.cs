@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Project_translator.Services
@@ -37,74 +36,46 @@ namespace Project_translator.Services
 
             var supportedLangs = new[] { "en", "ru", "tt", "es", "fr", "de", "tr", "zh" };
 
-            // Автоопределение
             if (sourceLang == "auto")
             {
                 sourceLang = DetectLanguage(text);
-                _logger.LogInformation($"🔍 Определен язык: {sourceLang}");
+                _logger.LogInformation($"🔍 Определен: {sourceLang}");
             }
 
             if (!supportedLangs.Contains(sourceLang) || !supportedLangs.Contains(targetLang))
-            {
                 return text;
-            }
 
             if (sourceLang == targetLang)
-            {
                 return text;
-            }
 
             try
             {
-                // 1. Память переводов
+                // 1. Память переводов (БД)
                 var memoryResult = await _memoryService.FindInMemoryAsync(text, sourceLang, targetLang);
-                if (memoryResult != null)
+                if (memoryResult != null && memoryResult != text)
                 {
-                    _logger.LogInformation($"💾 Найдено в памяти: '{memoryResult}'");
+                    _logger.LogInformation($"💾 Из памяти: {memoryResult}");
                     return memoryResult;
                 }
 
-                // 2. Локальный словарь
-                string dictKey = $"{sourceLang}-{targetLang}";
-                if (_dictionaries.TryGetValue(dictKey, out var dict))
-                {
-                    if (dict.TryGetValue(text.Trim(), out var translation))
-                    {
-                        _logger.LogInformation($"📖 Найдено в словаре: '{translation}'");
-                        await _memoryService.AddToMemoryAsync(text, translation, sourceLang, targetLang);
-                        return translation;
-                    }
-                }
+                // 2. Пробуем ВСЕ доступные API по очереди
+                string result = await TryAllTranslationAPIs(text, sourceLang, targetLang);
 
-                // 3. Пробуем Google Translate (через неофициальное API)
-                string result = await TryGoogleTranslate(text, sourceLang, targetLang);
-
-                if (!string.IsNullOrEmpty(result) && result != text)
+                if (result != text && !string.IsNullOrWhiteSpace(result))
                 {
-                    _logger.LogInformation($"✅ Google Translate: '{result}'");
                     await _memoryService.AddToMemoryAsync(text, result, sourceLang, targetLang);
                     return result;
                 }
 
-                // 4. Пробуем MyMemory API
-                result = await TryMyMemoryAPI(text, sourceLang, targetLang);
-
-                if (!string.IsNullOrEmpty(result) && result != text)
-                {
-                    _logger.LogInformation($"✅ MyMemory: '{result}'");
-                    await _memoryService.AddToMemoryAsync(text, result, sourceLang, targetLang);
-                    return result;
-                }
-
-                // 5. Fallback: перевод через английский
+                // 3. Последняя попытка - через промежуточный язык
                 if (sourceLang != "en" && targetLang != "en")
                 {
                     _logger.LogInformation("🔄 Пробуем через английский...");
-                    var toEnglish = await TryGoogleTranslate(text, sourceLang, "en");
+                    var toEnglish = await TranslateViaGoogle(text, sourceLang, "en");
                     if (toEnglish != text)
                     {
-                        var fromEnglish = await TryGoogleTranslate(toEnglish, "en", targetLang);
-                        if (fromEnglish != toEnglish)
+                        var fromEnglish = await TranslateViaGoogle(toEnglish, "en", targetLang);
+                        if (fromEnglish != toEnglish && fromEnglish != text)
                         {
                             await _memoryService.AddToMemoryAsync(text, fromEnglish, sourceLang, targetLang);
                             return fromEnglish;
@@ -112,73 +83,99 @@ namespace Project_translator.Services
                     }
                 }
 
-                // Если ничего не сработало
                 _logger.LogWarning($"⚠️ Не удалось перевести: '{text}'");
                 return text;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"❌ Ошибка перевода: '{text}'");
+                _logger.LogError(ex, $"❌ Ошибка: {text}");
                 return text;
             }
         }
 
-        // ===== GOOGLE TRANSLATE (неофициальное API) =====
-        private async Task<string> TryGoogleTranslate(string text, string sourceLang, string targetLang)
+        // ===== ПРОБУЕМ ВСЕ API =====
+        private async Task<string> TryAllTranslationAPIs(string text, string sourceLang, string targetLang)
+        {
+            // 1. Google Translate (основной)
+            var result = await TranslateViaGoogle(text, sourceLang, targetLang);
+            if (result != text && !string.IsNullOrWhiteSpace(result))
+                return result;
+
+            // 2. Microsoft Translator (резервный)
+            result = await TranslateViaMicrosoft(text, sourceLang, targetLang);
+            if (result != text && !string.IsNullOrWhiteSpace(result))
+                return result;
+
+            // 3. MyMemory (ещё один резервный)
+            result = await TranslateViaMyMemory(text, sourceLang, targetLang);
+            if (result != text && !string.IsNullOrWhiteSpace(result))
+                return result;
+
+            // 4. LibreTranslate (последний шанс)
+            result = await TranslateViaLibre(text, sourceLang, targetLang);
+            if (result != text && !string.IsNullOrWhiteSpace(result))
+                return result;
+
+            return text;
+        }
+
+        // ===== GOOGLE TRANSLATE =====
+        private async Task<string> TranslateViaGoogle(string text, string sourceLang, string targetLang)
         {
             try
             {
-                // Нормализуем коды для Google
-                string glSource = sourceLang switch
-                {
-                    "tt" => "ru", // Татарский через русский
-                    "auto" => "auto",
-                    _ => sourceLang
-                };
+                // Для татарского Google использует "tt"
+                string glSource = sourceLang == "tt" ? "tt" : sourceLang;
+                string glTarget = targetLang == "tt" ? "tt" : targetLang;
 
-                string glTarget = targetLang switch
-                {
-                    "tt" => "ru", // Татарский через русский
-                    _ => targetLang
-                };
+                string url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={glSource}&tl={glTarget}&dt=t&dt=bd&dj=1&q={Uri.EscapeDataString(text)}";
 
-                // Если после нормализации языки совпадают - пропускаем
-                if (glSource == glTarget)
+                var response = await _httpClient.GetStringAsync(url);
+                using var doc = JsonDocument.Parse(response);
+
+                // Новый формат ответа Google (с dj=1)
+                if (doc.RootElement.TryGetProperty("sentences", out var sentences))
                 {
-                    return text;
+                    var result = new System.Text.StringBuilder();
+                    foreach (var sentence in sentences.EnumerateArray())
+                    {
+                        if (sentence.TryGetProperty("trans", out var trans))
+                        {
+                            result.Append(trans.GetString());
+                        }
+                    }
+
+                    string translated = result.ToString().Trim();
+                    if (!string.IsNullOrWhiteSpace(translated) &&
+                        !translated.Equals(text, StringComparison.OrdinalIgnoreCase))
+                    {
+                        _logger.LogInformation($"✅ Google: '{translated}'");
+                        return translated;
+                    }
                 }
 
-                string url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl={glSource}&tl={glTarget}&dt=t&q={Uri.EscapeDataString(text)}";
-
-                _logger.LogInformation($"🌐 Google Translate: {url}");
-
-                var response = await _httpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-
-                string json = await response.Content.ReadAsStringAsync();
-
-                // Парсим ответ Google (это массив)
-                using var doc = JsonDocument.Parse(json);
-                var root = doc.RootElement;
-
-                if (root.GetArrayLength() > 0 && root[0].GetArrayLength() > 0)
+                // Старый формат (fallback)
+                if (doc.RootElement.ValueKind == JsonValueKind.Array &&
+                    doc.RootElement.GetArrayLength() > 0)
                 {
-                    var firstSegment = root[0][0];
-                    if (firstSegment.GetArrayLength() > 0)
+                    var firstArray = doc.RootElement[0];
+                    if (firstArray.GetArrayLength() > 0)
                     {
-                        string translatedText = firstSegment[0].GetString() ?? text;
-
-                        if (!string.IsNullOrWhiteSpace(translatedText) && translatedText != text)
+                        var result = new System.Text.StringBuilder();
+                        foreach (var item in firstArray.EnumerateArray())
                         {
-                            _logger.LogInformation($"✅ Google: '{translatedText}'");
-
-                            // Для татарского - добавляем известные переводы
-                            if (targetLang == "tt")
+                            if (item.GetArrayLength() > 0 && item[0].ValueKind == JsonValueKind.String)
                             {
-                                translatedText = ApplyTatarFixes(text, translatedText);
+                                result.Append(item[0].GetString());
                             }
+                        }
 
-                            return translatedText;
+                        string translated = result.ToString().Trim();
+                        if (!string.IsNullOrWhiteSpace(translated) &&
+                            !translated.Equals(text, StringComparison.OrdinalIgnoreCase))
+                        {
+                            _logger.LogInformation($"✅ Google (old): '{translated}'");
+                            return translated;
                         }
                     }
                 }
@@ -187,42 +184,83 @@ namespace Project_translator.Services
             }
             catch (Exception ex)
             {
-                _logger.LogWarning($"⚠️ Google Translate ошибка: {ex.Message}");
+                _logger.LogWarning($"⚠️ Google error: {ex.Message}");
                 return text;
             }
         }
 
-        // ===== MYMEMORY API (резервный) =====
-        private async Task<string> TryMyMemoryAPI(string text, string sourceLang, string targetLang)
+        // ===== MICROSOFT TRANSLATOR (БЕСПЛАТНЫЙ) =====
+        private async Task<string> TranslateViaMicrosoft(string text, string sourceLang, string targetLang)
         {
             try
             {
-                string encodedText = Uri.EscapeDataString(text);
-                string langPair = $"{sourceLang}|{targetLang}";
-                string url = $"https://api.mymemory.translated.net/get?q={encodedText}&langpair={langPair}";
-
-                _logger.LogInformation($"🌐 MyMemory: {url}");
-
-                var response = await _httpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-
-                string json = await response.Content.ReadAsStringAsync();
-                using var doc = JsonDocument.Parse(json);
-                var root = doc.RootElement;
-
-                if (root.TryGetProperty("responseData", out var responseData))
+                // Маппинг кодов для Microsoft
+                var msMap = new Dictionary<string, string>
                 {
-                    if (responseData.TryGetProperty("translatedText", out var translatedText))
+                    ["en"] = "en",
+                    ["ru"] = "ru",
+                    ["tt"] = "tt",
+                    ["es"] = "es",
+                    ["fr"] = "fr",
+                    ["de"] = "de",
+                    ["tr"] = "tr",
+                    ["zh"] = "zh-Hans"
+                };
+
+                string msSource = msMap.GetValueOrDefault(sourceLang, sourceLang);
+                string msTarget = msMap.GetValueOrDefault(targetLang, targetLang);
+
+                // Microsoft Translator бесплатный endpoint
+                string url = $"https://api.microsofttranslator.com/V2/Http.svc/Translate?text={Uri.EscapeDataString(text)}&from={msSource}&to={msTarget}";
+
+                var response = await _httpClient.GetStringAsync(url);
+
+                // Извлекаем перевод из XML-ответа
+                var startTag = "<string xmlns=\"http://schemas.microsoft.com/2003/10/Serialization/\">";
+                var endTag = "</string>";
+
+                if (response.Contains(startTag))
+                {
+                    int startIndex = response.IndexOf(startTag) + startTag.Length;
+                    int endIndex = response.IndexOf(endTag);
+
+                    string translated = response.Substring(startIndex, endIndex - startIndex);
+
+                    if (!string.IsNullOrWhiteSpace(translated) &&
+                        !translated.Equals(text, StringComparison.OrdinalIgnoreCase))
                     {
-                        string result = translatedText.GetString() ?? text;
+                        _logger.LogInformation($"✅ Microsoft: '{translated}'");
+                        return translated;
+                    }
+                }
 
-                        // Очищаем от предупреждений
+                return text;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"⚠️ Microsoft error: {ex.Message}");
+                return text;
+            }
+        }
+
+        // ===== MYMEMORY (существующий) =====
+        private async Task<string> TranslateViaMyMemory(string text, string sourceLang, string targetLang)
+        {
+            try
+            {
+                string url = $"https://api.mymemory.translated.net/get?q={Uri.EscapeDataString(text)}&langpair={sourceLang}|{targetLang}&de=demo@example.com";
+
+                var response = await _httpClient.GetStringAsync(url);
+                using var doc = JsonDocument.Parse(response);
+
+                if (doc.RootElement.TryGetProperty("responseData", out var data))
+                {
+                    if (data.TryGetProperty("translatedText", out var translated))
+                    {
+                        string result = translated.GetString()?.Trim() ?? text;
+
                         if (result.Contains("MYMEMORY WARNING:"))
-                        {
                             result = result.Split("MYMEMORY WARNING:")[0].Trim();
-                        }
-
-                        result = result.Trim();
 
                         if (!string.IsNullOrWhiteSpace(result) &&
                             !result.Equals(text, StringComparison.OrdinalIgnoreCase))
@@ -237,173 +275,64 @@ namespace Project_translator.Services
             }
             catch (Exception ex)
             {
-                _logger.LogWarning($"⚠️ MyMemory ошибка: {ex.Message}");
+                _logger.LogWarning($"⚠️ MyMemory error: {ex.Message}");
                 return text;
             }
         }
 
-        // ===== СПЕЦИАЛЬНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ТАТАРСКОГО =====
-        private string ApplyTatarFixes(string sourceText, string translatedText)
+        // ===== LIBRETRANSLATE (бесплатный, без API ключа) =====
+        private async Task<string> TranslateViaLibre(string text, string sourceLang, string targetLang)
         {
-            if (string.IsNullOrEmpty(translatedText))
-                return sourceText;
-
-            // Расширенный словарь татарских переводов
-            var tatarDictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            try
             {
-                // Приветствия
-                ["Здравствуйте"] = "Исәнмесез",
-                ["Здравствуй"] = "Исәнме",
-                ["Привет"] = "Сәлам",
-                ["Доброе утро"] = "Хәерле иртә",
-                ["Добрый день"] = "Хәерле көн",
-                ["Добрый вечер"] = "Хәерле кич",
-                ["До свидания"] = "Сау булыгыз",
-                ["Пока"] = "Сау бул",
-
-                // Благодарности
-                ["Спасибо"] = "Рәхмәт",
-                ["Большое спасибо"] = "Зур рәхмәт",
-                ["Пожалуйста"] = "Зинһар",
-                ["Извините"] = "Гафу итегез",
-                ["Простите"] = "Гафу ит",
-
-                // Базовые слова
-                ["Да"] = "Әйе",
-                ["Нет"] = "Юк",
-                ["Хорошо"] = "Яхшы",
-                ["Плохо"] = "Начар",
-                ["Красивый"] = "Матур",
-                ["Большой"] = "Зур",
-                ["Маленький"] = "Кечкенә",
-
-                // Люди
-                ["Человек"] = "Кеше",
-                ["Мужчина"] = "Ир",
-                ["Женщина"] = "Хатын",
-                ["Ребенок"] = "Бала",
-                ["Друг"] = "Дус",
-                ["Семья"] = "Гаилә",
-                ["Мама"] = "Әни",
-                ["Папа"] = "Әти",
-
-                // Еда
-                ["Хлеб"] = "Икмәк",
-                ["Вода"] = "Су",
-                ["Молоко"] = "Сөт",
-                ["Мясо"] = "Ит",
-                ["Чай"] = "Чәй",
-
-                // Цвета
-                ["Белый"] = "Ак",
-                ["Черный"] = "Кара",
-                ["Красный"] = "Кызыл",
-                ["Синий"] = "Зәңгәр",
-                ["Зеленый"] = "Яшел",
-                ["Желтый"] = "Сары",
-
-                // Числа
-                ["Один"] = "Бер",
-                ["Два"] = "Ике",
-                ["Три"] = "Өч",
-                ["Четыре"] = "Дүрт",
-                ["Пять"] = "Биш",
-
-                // Погода
-                ["Солнце"] = "Кояш",
-                ["Дождь"] = "Яңгыр",
-                ["Снег"] = "Кар",
-                ["Ветер"] = "Җил",
-
-                // Действия
-                ["Идти"] = "Барырга",
-                ["Есть"] = "Ашарга",
-                ["Пить"] = "Эчәргә",
-                ["Спать"] = "Йокларга",
-                ["Говорить"] = "Сөйләргә",
-                ["Читать"] = "Укырга",
-                ["Писать"] = "Язарга",
-                ["Любить"] = "Яратырга",
-
-                // Места
-                ["Дом"] = "Өй",
-                ["Школа"] = "Мәктәп",
-                ["Больница"] = "Хастаханә",
-                ["Магазин"] = "Кибет",
-                ["Город"] = "Шәһәр",
-                ["Деревня"] = "Авыл",
-
-                // Время
-                ["Сегодня"] = "Бүген",
-                ["Завтра"] = "Иртәгә",
-                ["Вчера"] = "Кичә",
-                ["Утро"] = "Иртә",
-                ["День"] = "Көн",
-                ["Вечер"] = "Кич",
-                ["Ночь"] = "Төн",
-
-                // Английский → Татарский
-                ["Hello"] = "Сәлам",
-                ["Goodbye"] = "Сау булыгыз",
-                ["Thank you"] = "Рәхмәт",
-                ["Please"] = "Зинһар",
-                ["Yes"] = "Әйе",
-                ["No"] = "Юк",
-                ["Good"] = "Яхшы",
-                ["Bad"] = "Начар",
-                ["Friend"] = "Дус",
-                ["Family"] = "Гаилә",
-                ["Love"] = "Мәхәббәт",
-                ["Mother"] = "Әни",
-                ["Father"] = "Әти",
-                ["Water"] = "Су",
-                ["Bread"] = "Икмәк",
-                ["Home"] = "Өй",
-                ["School"] = "Мәктәп"
-            };
-
-            // Сначала проверяем полное совпадение с исходным текстом
-            if (tatarDictionary.TryGetValue(sourceText.Trim(), out var exactMatch))
-            {
-                return exactMatch;
-            }
-
-            // Если перевод пришел на русском (для татарского), 
-            // пробуем заменить русские слова на татарские
-            if (IsRussianText(translatedText))
-            {
-                var words = translatedText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                var translatedWords = new List<string>();
-
-                foreach (var word in words)
+                // Маппинг для LibreTranslate
+                var libreMap = new Dictionary<string, string>
                 {
-                    var cleanWord = word.TrimEnd('.', ',', '!', '?', ':', ';');
+                    ["en"] = "en",
+                    ["ru"] = "ru",
+                    ["tt"] = "tt",
+                    ["es"] = "es",
+                    ["fr"] = "fr",
+                    ["de"] = "de",
+                    ["tr"] = "tr",
+                    ["zh"] = "zh"
+                };
 
-                    if (tatarDictionary.TryGetValue(cleanWord, out var tatarWord))
+                string libreSource = libreMap.GetValueOrDefault(sourceLang, sourceLang);
+                string libreTarget = libreMap.GetValueOrDefault(targetLang, targetLang);
+
+                var content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("q", text),
+                    new KeyValuePair<string, string>("source", libreSource),
+                    new KeyValuePair<string, string>("target", libreTarget),
+                    new KeyValuePair<string, string>("format", "text")
+                });
+
+                var response = await _httpClient.PostAsync("https://libretranslate.de/translate", content);
+                var json = await response.Content.ReadAsStringAsync();
+
+                using var doc = JsonDocument.Parse(json);
+
+                if (doc.RootElement.TryGetProperty("translatedText", out var translated))
+                {
+                    string result = translated.GetString()?.Trim() ?? text;
+
+                    if (!string.IsNullOrWhiteSpace(result) &&
+                        !result.Equals(text, StringComparison.OrdinalIgnoreCase))
                     {
-                        translatedWords.Add(tatarWord);
-                    }
-                    else
-                    {
-                        translatedWords.Add(cleanWord);
+                        _logger.LogInformation($"✅ LibreTranslate: '{result}'");
+                        return result;
                     }
                 }
 
-                string result = string.Join(" ", translatedWords);
-                if (result != translatedText)
-                {
-                    _logger.LogInformation($"🔧 Татарский перевод исправлен: '{translatedText}' → '{result}'");
-                }
-
-                return result;
+                return text;
             }
-
-            return translatedText;
-        }
-
-        private bool IsRussianText(string text)
-        {
-            return text.Any(c => c >= 'А' && c <= 'я');
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"⚠️ LibreTranslate error: {ex.Message}");
+                return text;
+            }
         }
 
         // ===== ОПРЕДЕЛЕНИЕ ЯЗЫКА =====
@@ -411,101 +340,36 @@ namespace Project_translator.Services
         {
             if (string.IsNullOrEmpty(text)) return "en";
 
-            if (text.Any(c => c >= 0x4E00 && c <= 0x9FFF))
-                return "zh";
-
-            if (text.Any(c => "ğüşıöçĞÜŞİÖÇ".Contains(c)))
-                return "tr";
-
-            if (text.Any(c => "äöüßÄÖÜ".Contains(c)))
-                return "de";
-
-            if (text.Any(c => "àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÛÜŸ".Contains(c)))
-                return "fr";
-
-            if (text.Any(c => "áéíóúñü¡¿ÁÉÍÓÚÑÜ".Contains(c)))
-                return "es";
-
+            if (text.Any(c => c >= 0x4E00 && c <= 0x9FFF)) return "zh";
+            if (text.Any(c => "ğüşıöçĞÜŞİÖÇ".Contains(c))) return "tr";
+            if (text.Any(c => "äöüßÄÖÜ".Contains(c))) return "de";
+            if (text.Any(c => "àâæçéèêëîïôœùûüÿ".Contains(c))) return "fr";
+            if (text.Any(c => "áéíóúñü¡¿".Contains(c))) return "es";
             if (text.Contains("ә") || text.Contains("ө") || text.Contains("ү") ||
-                text.Contains("җ") || text.Contains("ң") || text.Contains("һ"))
-                return "tt";
+                text.Contains("җ") || text.Contains("ң") || text.Contains("һ")) return "tt";
 
-            int cyrillicCount = text.Count(c => (c >= 'А' && c <= 'я') || c == 'ё' || c == 'Ё');
-            int latinCount = text.Count(c => (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+            int cyrillic = text.Count(c => (c >= 'А' && c <= 'я') || c == 'ё' || c == 'Ё');
+            int latin = text.Count(c => (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 
-            return cyrillicCount > latinCount ? "ru" : "en";
+            return cyrillic > latin ? "ru" : "en";
         }
 
         // ===== НОРМАЛИЗАЦИЯ =====
-        private string NormalizeLangCode(string langCode)
+        private string NormalizeLangCode(string code)
         {
-            return langCode?.ToLowerInvariant().Trim() switch
+            return code?.ToLowerInvariant() switch
             {
                 "auto" => "auto",
                 "eng" or "english" => "en",
                 "rus" or "russian" => "ru",
-                "tat" or "tatar" or "тат" or "татар" => "tt",
-                "spa" or "spanish" or "español" => "es",
-                "fra" or "french" or "français" => "fr",
-                "deu" or "german" or "deutsch" => "de",
-                "tur" or "turkish" or "türkçe" => "tr",
-                "chi" or "zho" or "chinese" or "中文" => "zh",
-                _ => langCode
+                "tat" or "tatar" => "tt",
+                "spa" or "spanish" => "es",
+                "fra" or "french" => "fr",
+                "deu" or "german" => "de",
+                "tur" or "turkish" => "tr",
+                "chi" or "zho" or "chinese" => "zh",
+                _ => code?.ToLower() ?? "en"
             };
         }
-
-        // ===== ЛОКАЛЬНЫЕ СЛОВАРИ (базовые) =====
-        private static readonly Dictionary<string, Dictionary<string, string>> _dictionaries = new()
-        {
-            ["en-ru"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Hello"] = "Привет",
-                ["Goodbye"] = "До свидания",
-                ["Thank you"] = "Спасибо",
-                ["Please"] = "Пожалуйста"
-            },
-            ["de-ru"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Hallo"] = "Привет",
-                ["Danke"] = "Спасибо",
-                ["Ja"] = "Да"
-            },
-            ["en-de"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Hello"] = "Hallo",
-                ["Thank you"] = "Danke",
-                ["Yes"] = "Ja"
-            },
-            ["en-fr"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Hello"] = "Bonjour",
-                ["Thank you"] = "Merci",
-                ["Yes"] = "Oui"
-            },
-            ["en-es"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Hello"] = "Hola",
-                ["Thank you"] = "Gracias",
-                ["Yes"] = "Sí"
-            },
-            ["en-tr"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Hello"] = "Merhaba",
-                ["Thank you"] = "Teşekkürler",
-                ["Yes"] = "Evet"
-            },
-            ["en-zh"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Hello"] = "你好",
-                ["Thank you"] = "谢谢",
-                ["Yes"] = "是"
-            },
-            ["ru-en"] = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["Привет"] = "Hello",
-                ["Спасибо"] = "Thank you",
-                ["Да"] = "Yes"
-            }
-        };
     }
 }

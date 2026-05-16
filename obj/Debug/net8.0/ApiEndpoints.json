@@ -16,6 +16,22 @@
     ]
   },
   {
+    "ContainingType": "Project_translator.Controllers.CulturalAdaptationController",
+    "Method": "GetProfile",
+    "RelativePath": "api/CulturalAdaptation/profile/{langCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "langCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Project_translator.Controllers.CulturalProfilesController",
     "Method": "GetCulturalProfiles",
     "RelativePath": "api/CulturalProfiles",
@@ -542,16 +558,6 @@
   },
   {
     "ContainingType": "Project_translator.Controllers.QuickTranslateController",
-    "Method": "Test",
-    "RelativePath": "api/QuickTranslate/test",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Project_translator.Controllers.QuickTranslateController",
     "Method": "Translate",
     "RelativePath": "api/QuickTranslate/translate",
     "HttpMethod": "POST",
@@ -560,7 +566,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Project_translator.Controllers.QuickTranslateRequest",
+        "Type": "Project_translator.Controllers.QuickTranslateController\u002BQuickTranslateRequest",
         "IsRequired": true
       }
     ],

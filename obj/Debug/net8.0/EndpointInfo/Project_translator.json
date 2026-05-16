@@ -6,6 +6,28 @@
     "version": "v1"
   },
   "paths": {
+    "/api/CulturalAdaptation/profile/{langCode}": {
+      "get": {
+        "tags": [
+          "CulturalAdaptation"
+        ],
+        "parameters": [
+          {
+            "name": "langCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/CulturalProfiles": {
       "get": {
         "tags": [
@@ -914,18 +936,6 @@
       }
     },
     "/api/QuickTranslate/status": {
-      "get": {
-        "tags": [
-          "QuickTranslate"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/QuickTranslate/test": {
       "get": {
         "tags": [
           "QuickTranslate"

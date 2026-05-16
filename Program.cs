@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.OpenApi.Models;
 using Project_translator.Data;
 using Project_translator.Models;
@@ -19,12 +20,13 @@ builder.Services.AddScoped<ITranslationService, MyMemoryTranslationService>();
 
 // ИЛИ если нужна фабричная регистрация:
 
+// Program.cs - замените существующую регистрацию TranslationService
 builder.Services.AddScoped<ITranslationService>(provider =>
 {
     var httpClient = provider.GetRequiredService<HttpClient>();
     var logger = provider.GetRequiredService<ILogger<MyMemoryTranslationService>>();
     var memoryService = provider.GetRequiredService<ITranslationMemoryService>();
-    
+
     return new MyMemoryTranslationService(httpClient, logger, memoryService);
 });
 
