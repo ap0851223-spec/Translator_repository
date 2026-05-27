@@ -2,6 +2,7 @@ wwwroot\css\animations.css
 wwwroot\css\site.css
 wwwroot\js\api-tester.js
 wwwroot\js\test-api.js
+wwwroot\js\test-translator.js
+wwwroot\js\translator-widget.js
 wwwroot\test-all.html
 wwwroot\test-ru-tt.html
-wwwroot\js\test-translator.js
